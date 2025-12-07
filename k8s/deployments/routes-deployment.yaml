@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: routes-deployment
+  namespace: default
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: routes
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: routes
+    spec:
+      containers:
+      - env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: DB_HOST
+              name: routes-config
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: DB_PORT
+              name: routes-config
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: DB_NAME
+              name: routes-config
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              key: PORT
+              name: routes-config
+        - name: NODE_ENV
+          valueFrom:
+            configMapKeyRef:
+              key: NODE_ENV
+              name: routes-config
+        - name: CALCULATION_SERVICE_URL
+          valueFrom:
+            configMapKeyRef:
+              key: CALCULATION_SERVICE_URL
+              name: routes-config
+        - name: AUTH_SERVICE_URL
+          valueFrom:
+            configMapKeyRef:
+              key: AUTH_SERVICE_URL
+              name: routes-config
+        - name: RABBITMQ_EXCHANGE
+          valueFrom:
+            configMapKeyRef:
+              key: RABBITMQ_EXCHANGE
+              name: routes-config
+        - name: RABBITMQ_EXCHANGE_TYPE
+          valueFrom:
+            configMapKeyRef:
+              key: RABBITMQ_EXCHANGE_TYPE
+              name: routes-config
+        - name: RABBITMQ_ROUTING_KEY
+          valueFrom:
+            configMapKeyRef:
+              key: RABBITMQ_ROUTING_KEY
+              name: routes-config
+        - name: RABBITMQ_MAX_RECONNECT_ATTEMPTS
+          valueFrom:
+            configMapKeyRef:
+              key: RABBITMQ_MAX_RECONNECT_ATTEMPTS
+              name: routes-config
+        - name: RABBITMQ_RECONNECT_DELAY
+          valueFrom:
+            configMapKeyRef:
+              key: RABBITMQ_RECONNECT_DELAY
+              name: routes-config
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              key: DB_USER
+              name: routes-secret
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: DB_PASSWORD
+              name: routes-secret
+        - name: AUTH_SERVICE_JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: AUTH_SERVICE_JWT_SECRET
+              name: routes-secret
+        - name: RABBITMQ_URL
+          valueFrom:
+            secretKeyRef:
+              key: RABBITMQ_URL
+              name: routes-secret
+        image: us-central1-docker.pkg.dev/turnkey-cyclist-480023-j5/runpath-repo/routes-service@sha256:43c181b5f2f58b08b66955ebfa2145565dc358973668a50a6c229a3647a65209
+        imagePullPolicy: IfNotPresent
+        name: routes
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

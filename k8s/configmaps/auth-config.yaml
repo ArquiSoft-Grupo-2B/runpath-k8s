@@ -1,0 +1,13 @@
+Version: v1
+data:
+  API_KEY: AIzaSyDTk8D3SMZEoX-4attYvzpZTKO6jclsU6A
+  FIREBASE_CREDENTIALS_JSON: '{"type":"service_account","project_id":"arquisoft-2b","private_key_id":"49581a32ad78e5353b60ffbf9f1b46c5b695d83e","private_key":"-----BEGIN
+    PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCUA2LZFZ9Sqfu+\n6Zu5iR+IeRj5UO6yAtZAtE4ZHMbYn+PNTG9YQdAkEnqXv4zqxqbRDQiSxj0DEIaq\nlrbMmiZZTzsjoJCqzQthDwu4DhKoOFQe/Kho09l35qQCj8sMJHSkR0gK7LH5RCYs\naLq0E5IFRpWvEW3jH/d0JEN3BVrKuzT0JJihN3LrJhOwLXZbNoGv1ndf+xoI29/J\nm3/kFRZx3ykmGznX0/rh7+t0OoWFGaivCJEiUd7af1SmMhU/vWcuaZGimkMFm6cf\nJa7y/bLhmIpxBN9bA2LP3Rhd8bcxmJ9qUXMbjL15IGhd8mwl0cj8bOUOMjPxRe/i\nVo2KUfK7AgMBAAECggEAKg4QPvgazcUIh4UevwfMEt29j9FEEQYnVDkm25HGmfRM\nKJ/oHx6MAkPR214MrwSEj29xmSqEWWOPr9ak19uQu918QzIzCKS77/bzcHdnK67d\nj/Rf8XEIID5DKYsruSZ+kdLDEH+STe3kHsgfDF1nJuKYUybTny4NBE3tcVrvIhzC\nKkbSFXZoDCA2w2CrpT2a5MP/iSCXIabtnmXmKcDeEFkdIaYtCLma3lnkQCLF42lv\n0ItutHtdHWk6cHuOzz7VIq6JlX6GieIxt6aFpEY7WQ9hn53pFEV/62ckWkzDpFMZ\nh8r9J03MU6bRZ78yivSBdA7LYRBf0+ZRB3E8GNw5UQKBgQDPBGx9BjjliMVNLvLS\nai/2TblSFQgrbZWXQTTISf8Q4gjqhAIyvlD/GBzTTCK75C1XM1w7ZyDd95NggXPb\n7bezrZGgpAYJn/4V3aRQhM3Vn2VZBigGBsnBUGUcGd407fkTU2e3wNIbScjaTQh+\nvDB02e6xDBD29pSDclVjzwFeSQKBgQC3CO7cX/fA+RC8jpKES4ZQ1urrnleTtzkm\nfQ1Vkfzysl6FbKtL061cN4XEjh2r4CU0PdTmzOla15a0dBGPTXZ/ZECZw3KcLxFC\n+jSRqHBKz86oqrpqIiIsnU0DRXMLP0hOD3RaVNFuwvOQx8fChFsAn0QEFcPnsnkn\ngj6RSyCY4wKBgHgdrv0UAStdom1YUlg4eL/G9UJlJapdGTD8Cq40ESUwoc/A7K2Y\ns9JvoToQsQ6oJI62JEvrWKyyG/cg5aK0WaSNjzPQOBiZlooFYnO9uti6dcmjwtFM\nWwApr6EQeVfoxF6sRD/gR4jB1SKlE8rFUrBaSx67S5SgGifyzQzubXLRAoGANFDN\nVRfpDLMj4YEux7l+jqSfSPFdPs9j+mhL42Vy0zvAYIqK+4VpS65jAadNO885UxFJ\nRR7UpC5y2OlEC52sfQT+ofSHUbTyTh6N4AQw9HEpNHR4C9Xtxqq/VGwJUfGojQdF\nznvn0KzQSVWQ9zw1dpwPKMu/zv3oOy6zC3xZuNkCgYEAkJPH1JrvbcBsiHG5eZLQ\np9rCbiuynMme2uCcvtaZDGTq3iQQTP/2x6HbMCk4uJDcruxZOK7SaPVl3z9sKG51\nGTcl2I5mI8UQYxdkyBakl+e/xzjQzAg7Dw4IZzTw/LIdBt88cIC1pteTN8bpMBdJ\n/Db40RHUmR9u4WW5CrZKYMw=\n-----END
+    PRIVATE KEY-----\n","client_email":"firebase-adminsdk-fbsvc@arquisoft-2b.iam.gserviceaccount.com","client_id":"114131100226454550205","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_x509_cert_url":"https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40arquisoft-2b.iam.gserviceaccount.com","universe_domain":"googleapis.com"}'
+kind: ConfigMap
+metadata:
+  labels:
+    app: auth-debug-deployment
+    app.kubernetes.io/managed-by: cloud-console
+  name: auth-debug-deployment-config-njny
+  namespace: default

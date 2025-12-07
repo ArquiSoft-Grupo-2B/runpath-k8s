@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: notification-deployment
+    app.kubernetes.io/managed-by: cloud-console
+  name: notification-deployment
+  namespace: default
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: notification-deployment
+      app.kubernetes.io/managed-by: cloud-console
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: notification-deployment
+        app.kubernetes.io/managed-by: cloud-console
+    spec:
+      containers:
+      - env:
+        - name: AUTH_SERVICE_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              key: AUTH_SERVICE_ENDPOINT
+              name: notification-deployment-config-b2am
+        - name: SPRING_MAIL_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: SPRING_MAIL_PASSWORD
+              name: notification-deployment-config-b2am
+        - name: SPRING_MAIL_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: SPRING_MAIL_USERNAME
+              name: notification-deployment-config-b2am
+        - name: SPRING_RABBITMQ_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: SPRING_RABBITMQ_HOST
+              name: notification-deployment-config-b2am
+        - name: SPRING_RABBITMQ_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: SPRING_RABBITMQ_PASSWORD
+              name: notification-deployment-config-b2am
+        - name: SPRING_RABBITMQ_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: SPRING_RABBITMQ_PORT
+              name: notification-deployment-config-b2am
+        - name: SPRING_RABBITMQ_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: SPRING_RABBITMQ_USERNAME
+              name: notification-deployment-config-b2am
+        image: us-central1-docker.pkg.dev/turnkey-cyclist-480023-j5/runpath-repo/notification-service@sha256:e7b995f3de372a879c96d52174abc860b25d0c4653d6ce80ed4ed78ca02b4115
+        imagePullPolicy: IfNotPresent
+        name: notification-service-sha256-1
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

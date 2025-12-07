@@ -1,0 +1,727 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"cert-manager","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"cert-manager","app.kubernetes.io/version":"v1.19.1"},"name":"cert-manager","namespace":"cert-manager"},"spec":{"ports":[{"name":"tcp-prometheus-servicemonitor","port":9402,"protocol":"TCP","targetPort":"http-metrics"}],"selector":{"app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"cert-manager"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-06T00:05:34Z"
+    labels:
+      app: cert-manager
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: cert-manager
+      app.kubernetes.io/name: cert-manager
+      app.kubernetes.io/version: v1.19.1
+    name: cert-manager
+    namespace: cert-manager
+    resourceVersion: "1764979534186159021"
+    uid: 8783b794-9ac6-4a00-b4a6-6a127e2f4c87
+  spec:
+    clusterIP: 34.118.236.4
+    clusterIPs:
+    - 34.118.236.4
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: tcp-prometheus-servicemonitor
+      port: 9402
+      protocol: TCP
+      targetPort: http-metrics
+    selector:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: cert-manager
+      app.kubernetes.io/name: cert-manager
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"cainjector","app.kubernetes.io/component":"cainjector","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"cainjector","app.kubernetes.io/version":"v1.19.1"},"name":"cert-manager-cainjector","namespace":"cert-manager"},"spec":{"ports":[{"name":"http-metrics","port":9402,"protocol":"TCP"}],"selector":{"app.kubernetes.io/component":"cainjector","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"cainjector"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-06T00:05:33Z"
+    labels:
+      app: cainjector
+      app.kubernetes.io/component: cainjector
+      app.kubernetes.io/instance: cert-manager
+      app.kubernetes.io/name: cainjector
+      app.kubernetes.io/version: v1.19.1
+    name: cert-manager-cainjector
+    namespace: cert-manager
+    resourceVersion: "1764979533560239006"
+    uid: 02123aba-cbaa-4a17-8c25-acb73ceffccd
+  spec:
+    clusterIP: 34.118.229.162
+    clusterIPs:
+    - 34.118.229.162
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http-metrics
+      port: 9402
+      protocol: TCP
+      targetPort: 9402
+    selector:
+      app.kubernetes.io/component: cainjector
+      app.kubernetes.io/instance: cert-manager
+      app.kubernetes.io/name: cainjector
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"webhook","app.kubernetes.io/component":"webhook","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"webhook","app.kubernetes.io/version":"v1.19.1"},"name":"cert-manager-webhook","namespace":"cert-manager"},"spec":{"ports":[{"name":"https","port":443,"protocol":"TCP","targetPort":"https"},{"name":"metrics","port":9402,"protocol":"TCP","targetPort":"http-metrics"}],"selector":{"app.kubernetes.io/component":"webhook","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"webhook"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-06T00:05:34Z"
+    labels:
+      app: webhook
+      app.kubernetes.io/component: webhook
+      app.kubernetes.io/instance: cert-manager
+      app.kubernetes.io/name: webhook
+      app.kubernetes.io/version: v1.19.1
+    name: cert-manager-webhook
+    namespace: cert-manager
+    resourceVersion: "1764979534588879005"
+    uid: 378c44b7-cdb8-4512-b41d-9946bfe9cb93
+  spec:
+    clusterIP: 34.118.235.96
+    clusterIPs:
+    - 34.118.235.96
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: https
+    - name: metrics
+      port: 9402
+      protocol: TCP
+      targetPort: http-metrics
+    selector:
+      app.kubernetes.io/component: webhook
+      app.kubernetes.io/instance: cert-manager
+      app.kubernetes.io/name: webhook
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"api-gateway-service","namespace":"default"},"spec":{"ports":[{"port":80,"targetPort":8888}],"selector":{"app":"api-gateway"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-03T23:30:26Z"
+    name: api-gateway-service
+    namespace: default
+    resourceVersion: "1764946024325727004"
+    uid: da6c235f-033a-4a12-aefe-021b9755cad4
+  spec:
+    clusterIP: 34.118.233.66
+    clusterIPs:
+    - 34.118.233.66
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8888
+    selector:
+      app: api-gateway
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"auth-service","namespace":"default"},"spec":{"ports":[{"port":80,"targetPort":8000}],"selector":{"app":"auth"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-03T02:30:03Z"
+    name: auth-service
+    namespace: default
+    resourceVersion: "1764946228740735020"
+    uid: d25bf6cd-944d-4f55-b768-0277cf659355
+  spec:
+    clusterIP: 34.118.227.167
+    clusterIPs:
+    - 34.118.227.167
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8000
+    selector:
+      app: auth
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"distance-app","component":"osrm-backend"},"name":"distance-service","namespace":"default"},"spec":{"ports":[{"name":"http","port":5000,"protocol":"TCP","targetPort":5000}],"selector":{"app":"distance-app"},"sessionAffinity":"None","type":"ClusterIP"}}
+    creationTimestamp: "2025-12-06T17:49:41Z"
+    labels:
+      app: distance-app
+      component: osrm-backend
+    name: distance-service
+    namespace: default
+    resourceVersion: "1765043381863215012"
+    uid: 409e9508-dc36-44b6-8958-238177db3e39
+  spec:
+    clusterIP: 34.118.231.203
+    clusterIPs:
+    - 34.118.231.203
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 5000
+      protocol: TCP
+      targetPort: 5000
+    selector:
+      app: distance-app
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"frontend-deployment-service","namespace":"default"},"spec":{"ports":[{"port":80,"targetPort":3001}],"selector":{"app":"frontend-deployment"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-04T17:32:37Z"
+    labels:
+      app: frontend-deployment
+    name: frontend-deployment-service
+    namespace: default
+    resourceVersion: "1764953595626447003"
+    uid: c7ed0dd4-f466-4d89-b58e-0dc8e3915378
+  spec:
+    clusterIP: 34.118.229.39
+    clusterIPs:
+    - 34.118.229.39
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 3001
+    selector:
+      app: frontend-deployment
+      app.kubernetes.io/managed-by: cloud-console
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2025-12-03T02:08:15Z"
+    labels:
+      component: apiserver
+      provider: kubernetes
+    name: kubernetes
+    namespace: default
+    resourceVersion: "1764727695122335006"
+    uid: d905e6ec-d5c5-4f8b-862f-7170ddc611f2
+  spec:
+    clusterIP: 34.118.224.1
+    clusterIPs:
+    - 34.118.224.1
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 443
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2025-12-06T01:57:45Z"
+    labels:
+      app: notification-deployment
+    name: notification-deployment-service
+    namespace: default
+    resourceVersion: "1764986265793679018"
+    uid: 10885acd-0da0-49ae-a219-7a3d74b86527
+  spec:
+    clusterIP: 34.118.233.133
+    clusterIPs:
+    - 34.118.233.133
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: notification-deployment
+      app.kubernetes.io/managed-by: cloud-console
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"postgres","namespace":"default"},"spec":{"ports":[{"port":5432,"targetPort":5432}],"selector":{"app":"postgres"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-04T02:07:16Z"
+    name: postgres
+    namespace: default
+    resourceVersion: "1764814036393023004"
+    uid: b21f6d81-4597-4c55-bd02-31b09d6f2ea8
+  spec:
+    clusterIP: 34.118.231.222
+    clusterIPs:
+    - 34.118.231.222
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      app: postgres
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"rabbitmq"},"name":"rabbitmq","namespace":"default"},"spec":{"clusterIP":"None","ports":[{"name":"amqp","port":5672,"targetPort":5672},{"name":"management","port":15672,"targetPort":15672}],"selector":{"app":"rabbitmq"}}}
+    creationTimestamp: "2025-12-04T15:44:38Z"
+    labels:
+      app: rabbitmq
+    name: rabbitmq
+    namespace: default
+    resourceVersion: "1764863078620143013"
+    uid: aec9445a-b6da-4cca-b71b-33a11ef3f349
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: amqp
+      port: 5672
+      protocol: TCP
+      targetPort: 5672
+    - name: management
+      port: 15672
+      protocol: TCP
+      targetPort: 15672
+    selector:
+      app: rabbitmq
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"routes-service","namespace":"default"},"spec":{"ports":[{"port":80,"targetPort":3000}],"selector":{"app":"routes"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-12-04T02:07:18Z"
+    name: routes-service
+    namespace: default
+    resourceVersion: "1764975108112847005"
+    uid: 894359f2-5b90-4cff-b602-f4ede0930a7c
+  spec:
+    clusterIP: 34.118.235.38
+    clusterIPs:
+    - 34.118.235.38
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      app: routes
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      components.gke.io/component-name: managed-prometheus
+      components.gke.io/component-version: 0.15.4-gke.3
+      components.gke.io/layer: addon
+    creationTimestamp: "2025-12-03T02:10:51Z"
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+    name: alertmanager
+    namespace: gmp-system
+    resourceVersion: "1764727851062735017"
+    uid: e8145fb6-964f-41ae-8809-c9f6e3489f2d
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: alertmanager
+      port: 9093
+      protocol: TCP
+      targetPort: 9093
+    selector:
+      app: managed-prometheus-alertmanager
+      app.kubernetes.io/name: alertmanager
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      components.gke.io/component-name: managed-prometheus
+      components.gke.io/component-version: 0.15.4-gke.3
+      components.gke.io/layer: addon
+    creationTimestamp: "2025-12-03T02:10:51Z"
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+    name: gmp-operator
+    namespace: gmp-system
+    resourceVersion: "1764727851723599023"
+    uid: f6eddda7-6af2-4ae4-b816-e432200f9aa4
+  spec:
+    clusterIP: 34.118.235.236
+    clusterIPs:
+    - 34.118.235.236
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: legacy
+      port: 8443
+      protocol: TCP
+      targetPort: webhook
+    - name: webhook
+      port: 443
+      protocol: TCP
+      targetPort: web
+    selector:
+      app.kubernetes.io/component: operator
+      app.kubernetes.io/name: gmp-operator
+      app.kubernetes.io/part-of: gmp
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      components.gke.io/component-name: managed-prometheus
+      components.gke.io/component-version: 0.15.4-gke.3
+      components.gke.io/layer: addon
+    creationTimestamp: "2025-12-03T02:10:51Z"
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+    name: rule-evaluator
+    namespace: gmp-system
+    resourceVersion: "1764727851418239018"
+    uid: 08ac1041-7a5b-41ca-a352-3b3d3a8e222b
+  spec:
+    clusterIP: 34.118.235.120
+    clusterIPs:
+    - 34.118.235.120
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: rule-evaluator
+      port: 19092
+      protocol: TCP
+      targetPort: 19092
+    selector:
+      app.kubernetes.io/name: rule-evaluator
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      meta.helm.sh/release-name: ingress-nginx
+      meta.helm.sh/release-namespace: ingress-nginx
+    creationTimestamp: "2025-12-05T16:48:00Z"
+    finalizers:
+    - gke.networking.io/l4-netlb-v1
+    - service.kubernetes.io/load-balancer-cleanup
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: ingress-nginx
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: ingress-nginx
+      app.kubernetes.io/part-of: ingress-nginx
+      app.kubernetes.io/version: 1.14.1
+      helm.sh/chart: ingress-nginx-4.14.1
+    name: ingress-nginx-controller
+    namespace: ingress-nginx
+    resourceVersion: "1764953317688527013"
+    uid: 8d2e58fd-3dbb-4cd2-a137-743754863f53
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 34.118.226.92
+    clusterIPs:
+    - 34.118.226.92
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - appProtocol: http
+      name: http
+      nodePort: 31749
+      port: 80
+      protocol: TCP
+      targetPort: http
+    - appProtocol: https
+      name: https
+      nodePort: 31658
+      port: 443
+      protocol: TCP
+      targetPort: https
+    selector:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: ingress-nginx
+      app.kubernetes.io/name: ingress-nginx
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 136.114.109.33
+        ipMode: VIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      meta.helm.sh/release-name: ingress-nginx
+      meta.helm.sh/release-namespace: ingress-nginx
+    creationTimestamp: "2025-12-05T16:48:00Z"
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: ingress-nginx
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: ingress-nginx
+      app.kubernetes.io/part-of: ingress-nginx
+      app.kubernetes.io/version: 1.14.1
+      helm.sh/chart: ingress-nginx-4.14.1
+    name: ingress-nginx-controller-admission
+    namespace: ingress-nginx
+    resourceVersion: "1764953280962255023"
+    uid: c05daf84-2cf8-4529-b515-7dabc515e477
+  spec:
+    clusterIP: 34.118.233.227
+    clusterIPs:
+    - 34.118.233.227
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - appProtocol: https
+      name: https-webhook
+      port: 443
+      protocol: TCP
+      targetPort: webhook
+    selector:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: ingress-nginx
+      app.kubernetes.io/name: ingress-nginx
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      components.gke.io/component-name: l7-lb-controller-combined
+      components.gke.io/component-version: 1.36.4-gke.0
+      components.gke.io/layer: addon
+    creationTimestamp: "2025-12-03T02:10:44Z"
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+      k8s-app: glbc
+      kubernetes.io/cluster-service: "true"
+      kubernetes.io/name: GLBCDefaultBackend
+    name: default-http-backend
+    namespace: kube-system
+    resourceVersion: "1764954050907711023"
+    uid: 8d19fabe-191b-46fc-aeb8-52d7616c4d91
+  spec:
+    clusterIP: 34.118.229.29
+    clusterIPs:
+    - 34.118.229.29
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      nodePort: 30895
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      k8s-app: glbc
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2025-12-03T02:09:57Z"
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+      k8s-app: kube-dns
+      kubernetes.io/cluster-service: "true"
+      kubernetes.io/name: KubeDNS
+    name: kube-dns
+    namespace: kube-system
+    resourceVersion: "1764727798089247020"
+    uid: 87fd8d0e-a72e-4b84-b4f3-464f8271e872
+  spec:
+    clusterIP: 34.118.224.10
+    clusterIPs:
+    - 34.118.224.10
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: dns
+      port: 53
+      protocol: UDP
+      targetPort: 53
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+      targetPort: 53
+    selector:
+      k8s-app: kube-dns
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      components.gke.io/component-name: metrics-server
+      components.gke.io/component-version: 1.33.0-gke.3
+      components.gke.io/layer: addon
+    creationTimestamp: "2025-12-03T02:10:57Z"
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+      kubernetes.io/cluster-service: "true"
+      kubernetes.io/name: Metrics-server
+    name: metrics-server
+    namespace: kube-system
+    resourceVersion: "1764727857914943011"
+    uid: 445c7be4-bb51-4158-9aaa-72fa6a1e021e
+  spec:
+    clusterIP: 34.118.231.164
+    clusterIPs:
+    - 34.118.231.164
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 443
+      protocol: TCP
+      targetPort: https
+    selector:
+      k8s-app: metrics-server
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""

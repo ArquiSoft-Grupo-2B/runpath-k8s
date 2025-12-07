@@ -1,0 +1,16 @@
+apiVersion: v1
+data:
+  AUTH_SERVICE_ENDPOINT: http://api-gateway-service:80/authApi/graphql
+  SPRING_MAIL_PASSWORD: TBD
+  SPRING_MAIL_USERNAME: TBD
+  SPRING_RABBITMQ_HOST: rabbitmq
+  SPRING_RABBITMQ_PASSWORD: guest
+  SPRING_RABBITMQ_PORT: '5672'
+  SPRING_RABBITMQ_USERNAME: guest
+kind: ConfigMap
+metadata:
+  labels:
+    app: notification-deployment
+    app.kubernetes.io/managed-by: cloud-console
+  name: notification-deployment-config-b2am
+  namespace: default

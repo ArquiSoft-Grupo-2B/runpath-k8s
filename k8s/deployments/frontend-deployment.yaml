@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend-deployment
+    app.kubernetes.io/managed-by: cloud-console
+  name: frontend-deployment
+  namespace: default
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: frontend-deployment
+      app.kubernetes.io/managed-by: cloud-console
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: frontend-deployment
+        app.kubernetes.io/managed-by: cloud-console
+    spec:
+      containers:
+      - env:
+        - name: API_GATEWAY
+          valueFrom:
+            configMapKeyRef:
+              key: API_GATEWAY
+              name: frontend-deployment-config-yftt
+        - name: AUTH_SERVICE
+          valueFrom:
+            configMapKeyRef:
+              key: AUTH_SERVICE
+              name: frontend-deployment-config-yftt
+        - name: DISTANCE_SERVICE
+          valueFrom:
+            configMapKeyRef:
+              key: DISTANCE_SERVICE
+              name: frontend-deployment-config-yftt
+        - name: ROUTES_SERVICE
+          valueFrom:
+            configMapKeyRef:
+              key: ROUTES_SERVICE
+              name: frontend-deployment-config-yftt
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              key: PORT
+              name: frontend-deployment-config-yftt
+        - name: NEXT_PUBLIC_MAPBOX_TOKEN
+          valueFrom:
+            configMapKeyRef:
+              key: NEXT_PUBLIC_MAPBOX_TOKEN
+              name: frontend-deployment-config-yftt
+        image: us-central1-docker.pkg.dev/turnkey-cyclist-480023-j5/runpath-repo/frontend-ssr@sha256:51303a2a66b7e0bef74f198408a42f52c285de5a16e4af152fd82221ca655923
+        imagePullPolicy: IfNotPresent
+        name: frontend-ssr-sha256-1
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

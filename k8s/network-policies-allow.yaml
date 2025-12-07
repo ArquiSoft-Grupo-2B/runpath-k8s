@@ -1,0 +1,14 @@
+# Reglas de comunicación permitidas entre servicios
+# Ejemplo: Permitir tráfico al API Gateway
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-api-gateway
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: api-gateway
+  ingress:
+  - from:
+    - podSelector: {}

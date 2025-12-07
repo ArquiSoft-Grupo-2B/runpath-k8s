@@ -1,0 +1,564 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{},"labels":{"app":"rabbitmq"},"name":"rabbitmq","namespace":"default"},"spec":{"replicas":3,"selector":{"matchLabels":{"app":"rabbitmq"}},"serviceName":"rabbitmq","template":{"metadata":{"labels":{"app":"rabbitmq"}},"spec":{"containers":[{"env":[{"name":"RABBITMQ_DEFAULT_USER","value":"guest"},{"name":"RABBITMQ_DEFAULT_PASS","value":"guest"},{"name":"RABBITMQ_ERLANG_COOKIE","valueFrom":{"secretKeyRef":{"key":"RABBITMQ_ERLANG_COOKIE","name":"rabbitmq-cookie"}}}],"image":"rabbitmq:4.0.2-management","name":"rabbitmq","ports":[{"containerPort":5672},{"containerPort":15672}],"volumeMounts":[{"mountPath":"/var/lib/rabbitmq","name":"rabbitmq-data"}]}]}},"volumeClaimTemplates":[{"metadata":{"name":"rabbitmq-data"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"10Gi"}}}}]}}
+    creationTimestamp: "2025-12-04T15:44:56Z"
+    generation: 2
+    labels:
+      app: rabbitmq
+    name: rabbitmq
+    namespace: default
+    resourceVersion: "1765080909435295000"
+    uid: e6dc3e23-f50c-47ff-bbaf-8e16b287e3a8
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 3
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: rabbitmq
+    serviceName: rabbitmq
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-04T10:48:09-05:00"
+        creationTimestamp: null
+        labels:
+          app: rabbitmq
+      spec:
+        containers:
+        - env:
+          - name: RABBITMQ_DEFAULT_USER
+            value: guest
+          - name: RABBITMQ_DEFAULT_PASS
+            value: guest
+          - name: RABBITMQ_ERLANG_COOKIE
+            valueFrom:
+              secretKeyRef:
+                key: RABBITMQ_ERLANG_COOKIE
+                name: rabbitmq-cookie
+          image: rabbitmq:4.0.2-management
+          imagePullPolicy: IfNotPresent
+          name: rabbitmq
+          ports:
+          - containerPort: 5672
+            protocol: TCP
+          - containerPort: 15672
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/rabbitmq
+            name: rabbitmq-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        creationTimestamp: null
+        name: rabbitmq-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 3
+    collisionCount: 0
+    currentReplicas: 3
+    currentRevision: rabbitmq-58b7c65455
+    observedGeneration: 2
+    readyReplicas: 3
+    replicas: 3
+    updateRevision: rabbitmq-58b7c65455
+    updatedReplicas: 3
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      components.gke.io/layer: addon
+    creationTimestamp: "2025-12-03T02:10:08Z"
+    generation: 1
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+      app.kubernetes.io/name: gke-managed-kube-state-metrics
+    name: kube-state-metrics
+    namespace: gke-managed-cim
+    resourceVersion: "1764727912437903013"
+    uid: 72f26a0a-b259-4969-b049-516d05d76b56
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/name: gke-managed-kube-state-metrics
+    serviceName: kube-state-metrics
+    template:
+      metadata:
+        annotations:
+          components.gke.io/component-name: cluster-infra-metrics
+          components.gke.io/component-version: 1.33.4-gke.3
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/name: gke-managed-kube-state-metrics
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - amd64
+                  - arm64
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+        containers:
+        - args:
+          - --pod=$(POD_NAME)
+          - --pod-namespace=$(POD_NAMESPACE)
+          - --port=8080
+          - --telemetry-port=8081
+          - --resources=pods,persistentvolumes,persistentvolumeclaims,horizontalpodautoscalers,daemonsets,deployments,statefulsets
+          - --metric-allowlist=kube_horizontalpodautoscaler_status_desired_replicas,kube_horizontalpodautoscaler_status_current_replicas,kube_horizontalpodautoscaler_spec_target_metric,kube_horizontalpodautoscaler_spec_min_replicas,kube_horizontalpodautoscaler_spec_max_replicas,kube_horizontalpodautoscaler_status_condition,kube_pod_status_phase,kube_pod_container_status_waiting_reason,kube_pod_container_status_ready,kube_pod_status_unschedulable,kube_daemonset_status_number_misscheduled,kube_daemonset_status_number_ready,kube_daemonset_status_desired_number_scheduled,kube_daemonset_status_updated_number_scheduled,kube_deployment_spec_replicas,kube_deployment_status_replicas_available,kube_deployment_status_replicas_updated,kube_statefulset_replicas,kube_statefulset_status_replicas_ready,kube_statefulset_status_replicas_updated,kube_jobset_specified_replicas,kube_jobset_ready_replicas,kube_jobset_succeeded_replicas,kube_jobset_failed_replicas,kube_jobset_active_replicas,kube_jobset_suspended_replicas,kube_jobset_status_condition,kube_jobset_restarts,kube_persistentvolume_capacity_bytes,kube_persistentvolume_status_phase,kube_persistentvolume_claim_ref,kube_persistentvolume_info,kube_persistentvolumeclaim_info,kube_persistentvolumeclaim_resource_requests_storage_bytes,kube_persistentvolumeclaim_status_phase
+          - --namespaces-denylist=kube-system,kube-node-lease,gmp-system,gke-gmp-system,gke-managed-system,gke-managed-cim
+          - --custom-resource-state-config-file=/conf/custom-resource-state-config.yaml
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/kube-state-metrics:v2.14.0-gke.25@sha256:85ee4852b28396e773f56f16afddeefa1e6e751d69b6721642c46c03eab5399a
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: kube-state-metrics
+          ports:
+          - containerPort: 8080
+            name: k8s-objects
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              memory: 500Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1000
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /conf
+            name: kube-state-metrics-cr-metrics-vol
+        - env:
+          - name: GOMAXPROCS
+            value: "2"
+          - name: PROJECT_NUMBER
+            value: "536699234122"
+          - name: LOCATION
+            value: us-central1-a
+          - name: CLUSTER_NAME
+            value: runpath-cluster
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: CONTAINER_NAME
+            value: ksm-metrics-collector
+          - name: COLLECTOR_CONFIG_PATH
+            value: /conf/ksm-metrics-collector-config-data.textproto
+          - name: COMPONENT_VERSION
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.annotations['components.gke.io/component-version']
+          - name: COMPONENT_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.annotations['components.gke.io/component-name']
+          - name: SPLIT_GAUGE_BUFFER
+            value: "true"
+          - name: TOKEN_SOURCE_MODE
+            value: MODE_TOKEN_BROKER_WITH_FALLBACK
+          - name: GKE_NODE_SYSTEM_WORKLOAD_CREDENTIALS
+            value: /var/run/token_broker/adc/google-application-credentials.json
+          - name: GKE_HOSTNAME
+            value: container.googleapis.com
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/gke-metrics-collector:20250508_2300_RC0@sha256:d074c77bdc0ee1c4245113e62d93ef1ed6f1a51960ea854a972861a6a0c774ce
+          imagePullPolicy: IfNotPresent
+          name: ksm-metrics-collector
+          resources:
+            limits:
+              cpu: "1"
+              memory: 30Mi
+            requests:
+              cpu: 5m
+              memory: 30Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            readOnlyRootFilesystem: true
+            runAsGroup: 1000
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /conf
+            name: ksm-metrics-collector-config-map-vol
+          - mountPath: /var/run/token_broker/ksa
+            name: token-broker-ksa
+            readOnly: true
+          - mountPath: /var/run/token_broker/adc
+            name: token-broker-adc
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - /node_token_broker_init
+          - --audience=https://container.googleapis.com/v1/projects/536699234122/locations/us-central1-a/clusters/runpath-cluster/generateClusterNodeAgentToken
+          - --token_url=https://container.googleapis.com/v1/projects/536699234122/locations/us-central1-a/clusters/runpath-cluster/generateClusterNodeAgentToken
+          - --token_file=/var/run/token_broker/ksa/token
+          - --output_path=/var/run/token_broker/adc/google-application-credentials.json
+          - --project_id=turnkey-cyclist-480023-j5
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/node_token_broker/init:gke_node_token_broker_init_20250407.00_p0@sha256:8c161bd0d3f2ffc1d580f8b28a2a848cdc1867a84ff8abf7fd6908291697a075
+          imagePullPolicy: IfNotPresent
+          name: token-broker-adc-init
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/token_broker/adc
+            name: token-broker-adc
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-state-metrics
+        serviceAccountName: kube-state-metrics
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: amd64
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+        - key: components.gke.io/gke-managed-components
+          operator: Exists
+        volumes:
+        - name: token-broker-ksa
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: https://container.googleapis.com/v1/projects/536699234122/locations/us-central1-a/clusters/runpath-cluster/generateClusterNodeAgentToken
+                expirationSeconds: 3600
+                path: token
+        - emptyDir: {}
+          name: token-broker-adc
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: ksm-metrics-collector-config-data
+              path: ksm-metrics-collector-config-data.textproto
+            name: ksm-metrics-collector-config-map
+          name: ksm-metrics-collector-config-map-vol
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: custom-resource-state-config.yaml
+              path: custom-resource-state-config.yaml
+            name: kube-state-metrics-cr-metrics
+          name: kube-state-metrics-cr-metrics-vol
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: kube-state-metrics-65d4bc548f
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: kube-state-metrics-65d4bc548f
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      components.gke.io/layer: addon
+    creationTimestamp: "2025-12-03T02:10:52Z"
+    generation: 2
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+    name: alertmanager
+    namespace: gmp-system
+    resourceVersion: "1764727900366479014"
+    uid: ffc99cd6-f224-4095-b37f-44097c962bdc
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: managed-prometheus-alertmanager
+        app.kubernetes.io/name: alertmanager
+    serviceName: alertmanager
+    template:
+      metadata:
+        annotations:
+          cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+          components.gke.io/component-name: managed-prometheus
+          components.gke.io/component-version: 0.15.4-gke.3
+        creationTimestamp: null
+        labels:
+          app: managed-prometheus-alertmanager
+          app.kubernetes.io/name: alertmanager
+          app.kubernetes.io/version: 0.15.4
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - arm64
+                  - amd64
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+        automountServiceAccountToken: false
+        containers:
+        - args:
+          - --config.file=/alertmanager/config_out/config.yaml
+          - --storage.path=/alertmanager-data
+          - --cluster.listen-address=[$(POD_IP)]:9094
+          - --web.listen-address=:9093
+          - --log.format=json
+          env:
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.podIP
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/prometheus-engine/alertmanager:v0.27.0-gmp.4-gke.0@sha256:86611e3a9f1f734081b706474c1af649804d31c3a06e40515fb6e5d73b9c3e08
+          imagePullPolicy: IfNotPresent
+          name: alertmanager
+          ports:
+          - containerPort: 9093
+            name: alertmanager
+            protocol: TCP
+          resources:
+            limits:
+              memory: 128M
+            requests:
+              cpu: 1m
+              memory: 16M
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            privileged: false
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /alertmanager/config_out
+            name: alertmanager-config
+            readOnly: true
+          - mountPath: /alertmanager-data
+            name: alertmanager-data
+        - args:
+          - --config-file=/alertmanager/config.yaml
+          - --config-file-output=/alertmanager/config_out/config.yaml
+          - --reload-url=http://127.0.0.1:9093/-/reload
+          - --ready-url=http://127.0.0.1:9093/-/ready
+          - --listen-address=:19091
+          env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/prometheus-engine/config-reloader:v0.15.4-gke.0@sha256:d829f291c33fd8eb83073047903ffcc1afa4fce7dea146ad6ed1f409f788d298
+          imagePullPolicy: IfNotPresent
+          name: config-reloader
+          ports:
+          - containerPort: 19091
+            name: cfg-rel-metrics
+            protocol: TCP
+          resources:
+            limits:
+              memory: 32M
+            requests:
+              cpu: 1m
+              memory: 4M
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            privileged: false
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /alertmanager
+            name: config
+            readOnly: true
+          - mountPath: /alertmanager/config_out
+            name: alertmanager-config
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - /bin/bash
+          - -c
+          - 'touch /alertmanager/config_out/config.yaml && echo -e "receivers:\n  -
+            name: noop\nroute:\n  receiver: noop" > alertmanager/config_out/config.yaml'
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/gke-distroless/bash:gke_distroless_20250707.00_p0@sha256:899ee9283648aec99fb2d6c7b90e19ba8d5edbe6c281d13014915bd60cf082fa
+          imagePullPolicy: IfNotPresent
+          name: config-init
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            privileged: false
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /alertmanager/config_out
+            name: alertmanager-config
+        priorityClassName: gmp-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: amd64
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+        - key: components.gke.io/gke-managed-components
+          operator: Exists
+        volumes:
+        - name: config
+          secret:
+            defaultMode: 420
+            secretName: alertmanager
+        - emptyDir: {}
+          name: alertmanager-data
+        - emptyDir: {}
+          name: alertmanager-config
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+  status:
+    availableReplicas: 0
+    collisionCount: 0
+    currentRevision: alertmanager-785bd67967
+    observedGeneration: 2
+    replicas: 0
+    updateRevision: alertmanager-785bd67967
+kind: List
+metadata:
+  resourceVersion: ""

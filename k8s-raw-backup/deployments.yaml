@@ -1,0 +1,2900 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"cert-manager","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"cert-manager","app.kubernetes.io/version":"v1.19.1"},"name":"cert-manager","namespace":"cert-manager"},"spec":{"replicas":1,"selector":{"matchLabels":{"app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"cert-manager"}},"template":{"metadata":{"annotations":{"prometheus.io/path":"/metrics","prometheus.io/port":"9402","prometheus.io/scrape":"true"},"labels":{"app":"cert-manager","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"cert-manager","app.kubernetes.io/version":"v1.19.1"}},"spec":{"containers":[{"args":["--v=2","--cluster-resource-namespace=$(POD_NAMESPACE)","--leader-election-namespace=kube-system","--acme-http01-solver-image=quay.io/jetstack/cert-manager-acmesolver:v1.19.1","--max-concurrent-challenges=60"],"env":[{"name":"POD_NAMESPACE","valueFrom":{"fieldRef":{"fieldPath":"metadata.namespace"}}}],"image":"quay.io/jetstack/cert-manager-controller:v1.19.1","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":8,"httpGet":{"path":"/livez","port":"http-healthz","scheme":"HTTP"},"initialDelaySeconds":10,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":15},"name":"cert-manager-controller","ports":[{"containerPort":9402,"name":"http-metrics","protocol":"TCP"},{"containerPort":9403,"name":"http-healthz","protocol":"TCP"}],"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true}}],"enableServiceLinks":false,"nodeSelector":{"kubernetes.io/os":"linux"},"securityContext":{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"serviceAccountName":"cert-manager"}}}}
+    creationTimestamp: "2025-12-06T00:05:36Z"
+    generation: 1
+    labels:
+      app: cert-manager
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: cert-manager
+      app.kubernetes.io/name: cert-manager
+      app.kubernetes.io/version: v1.19.1
+    name: cert-manager
+    namespace: cert-manager
+    resourceVersion: "1764979541619439018"
+    uid: dd433b7d-cd62-4272-83fb-5bf5306aa670
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: controller
+        app.kubernetes.io/instance: cert-manager
+        app.kubernetes.io/name: cert-manager
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "9402"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: cert-manager
+          app.kubernetes.io/component: controller
+          app.kubernetes.io/instance: cert-manager
+          app.kubernetes.io/name: cert-manager
+          app.kubernetes.io/version: v1.19.1
+      spec:
+        containers:
+        - args:
+          - --v=2
+          - --cluster-resource-namespace=$(POD_NAMESPACE)
+          - --leader-election-namespace=kube-system
+          - --acme-http01-solver-image=quay.io/jetstack/cert-manager-acmesolver:v1.19.1
+          - --max-concurrent-challenges=60
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          image: quay.io/jetstack/cert-manager-controller:v1.19.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 8
+            httpGet:
+              path: /livez
+              port: http-healthz
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+          name: cert-manager-controller
+          ports:
+          - containerPort: 9402
+            name: http-metrics
+            protocol: TCP
+          - containerPort: 9403
+            name: http-healthz
+            protocol: TCP
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: false
+        nodeSelector:
+          kubernetes.io/os: linux
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: cert-manager
+        serviceAccountName: cert-manager
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-06T00:05:41Z"
+      lastUpdateTime: "2025-12-06T00:05:41Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-06T00:05:36Z"
+      lastUpdateTime: "2025-12-06T00:05:41Z"
+      message: ReplicaSet "cert-manager-7f6864ff99" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"cainjector","app.kubernetes.io/component":"cainjector","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"cainjector","app.kubernetes.io/version":"v1.19.1"},"name":"cert-manager-cainjector","namespace":"cert-manager"},"spec":{"replicas":1,"selector":{"matchLabels":{"app.kubernetes.io/component":"cainjector","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"cainjector"}},"template":{"metadata":{"annotations":{"prometheus.io/path":"/metrics","prometheus.io/port":"9402","prometheus.io/scrape":"true"},"labels":{"app":"cainjector","app.kubernetes.io/component":"cainjector","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"cainjector","app.kubernetes.io/version":"v1.19.1"}},"spec":{"containers":[{"args":["--v=2","--leader-election-namespace=kube-system"],"env":[{"name":"POD_NAMESPACE","valueFrom":{"fieldRef":{"fieldPath":"metadata.namespace"}}}],"image":"quay.io/jetstack/cert-manager-cainjector:v1.19.1","imagePullPolicy":"IfNotPresent","name":"cert-manager-cainjector","ports":[{"containerPort":9402,"name":"http-metrics","protocol":"TCP"}],"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true}}],"enableServiceLinks":false,"nodeSelector":{"kubernetes.io/os":"linux"},"securityContext":{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"serviceAccountName":"cert-manager-cainjector"}}}}
+    creationTimestamp: "2025-12-06T00:05:35Z"
+    generation: 1
+    labels:
+      app: cainjector
+      app.kubernetes.io/component: cainjector
+      app.kubernetes.io/instance: cert-manager
+      app.kubernetes.io/name: cainjector
+      app.kubernetes.io/version: v1.19.1
+    name: cert-manager-cainjector
+    namespace: cert-manager
+    resourceVersion: "1764979541718287012"
+    uid: e90523e4-9743-4923-a8b7-193f7ededd7c
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: cainjector
+        app.kubernetes.io/instance: cert-manager
+        app.kubernetes.io/name: cainjector
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "9402"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: cainjector
+          app.kubernetes.io/component: cainjector
+          app.kubernetes.io/instance: cert-manager
+          app.kubernetes.io/name: cainjector
+          app.kubernetes.io/version: v1.19.1
+      spec:
+        containers:
+        - args:
+          - --v=2
+          - --leader-election-namespace=kube-system
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          image: quay.io/jetstack/cert-manager-cainjector:v1.19.1
+          imagePullPolicy: IfNotPresent
+          name: cert-manager-cainjector
+          ports:
+          - containerPort: 9402
+            name: http-metrics
+            protocol: TCP
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: false
+        nodeSelector:
+          kubernetes.io/os: linux
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: cert-manager-cainjector
+        serviceAccountName: cert-manager-cainjector
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-06T00:05:41Z"
+      lastUpdateTime: "2025-12-06T00:05:41Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-06T00:05:35Z"
+      lastUpdateTime: "2025-12-06T00:05:41Z"
+      message: ReplicaSet "cert-manager-cainjector-6595c6777" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"webhook","app.kubernetes.io/component":"webhook","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"webhook","app.kubernetes.io/version":"v1.19.1"},"name":"cert-manager-webhook","namespace":"cert-manager"},"spec":{"replicas":1,"selector":{"matchLabels":{"app.kubernetes.io/component":"webhook","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"webhook"}},"template":{"metadata":{"annotations":{"prometheus.io/path":"/metrics","prometheus.io/port":"9402","prometheus.io/scrape":"true"},"labels":{"app":"webhook","app.kubernetes.io/component":"webhook","app.kubernetes.io/instance":"cert-manager","app.kubernetes.io/name":"webhook","app.kubernetes.io/version":"v1.19.1"}},"spec":{"containers":[{"args":["--v=2","--secure-port=10250","--dynamic-serving-ca-secret-namespace=$(POD_NAMESPACE)","--dynamic-serving-ca-secret-name=cert-manager-webhook-ca","--dynamic-serving-dns-names=cert-manager-webhook","--dynamic-serving-dns-names=cert-manager-webhook.$(POD_NAMESPACE)","--dynamic-serving-dns-names=cert-manager-webhook.$(POD_NAMESPACE).svc"],"env":[{"name":"POD_NAMESPACE","valueFrom":{"fieldRef":{"fieldPath":"metadata.namespace"}}}],"image":"quay.io/jetstack/cert-manager-webhook:v1.19.1","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/livez","port":"healthcheck","scheme":"HTTP"},"initialDelaySeconds":60,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"cert-manager-webhook","ports":[{"containerPort":10250,"name":"https","protocol":"TCP"},{"containerPort":6080,"name":"healthcheck","protocol":"TCP"},{"containerPort":9402,"name":"http-metrics","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/healthz","port":"healthcheck","scheme":"HTTP"},"initialDelaySeconds":5,"periodSeconds":5,"successThreshold":1,"timeoutSeconds":1},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true}}],"enableServiceLinks":false,"nodeSelector":{"kubernetes.io/os":"linux"},"securityContext":{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"serviceAccountName":"cert-manager-webhook"}}}}
+    creationTimestamp: "2025-12-06T00:05:36Z"
+    generation: 1
+    labels:
+      app: webhook
+      app.kubernetes.io/component: webhook
+      app.kubernetes.io/instance: cert-manager
+      app.kubernetes.io/name: webhook
+      app.kubernetes.io/version: v1.19.1
+    name: cert-manager-webhook
+    namespace: cert-manager
+    resourceVersion: "1764979550776687013"
+    uid: 64fa5354-e06f-4b68-b02b-2bd9aebcda00
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: webhook
+        app.kubernetes.io/instance: cert-manager
+        app.kubernetes.io/name: webhook
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "9402"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: webhook
+          app.kubernetes.io/component: webhook
+          app.kubernetes.io/instance: cert-manager
+          app.kubernetes.io/name: webhook
+          app.kubernetes.io/version: v1.19.1
+      spec:
+        containers:
+        - args:
+          - --v=2
+          - --secure-port=10250
+          - --dynamic-serving-ca-secret-namespace=$(POD_NAMESPACE)
+          - --dynamic-serving-ca-secret-name=cert-manager-webhook-ca
+          - --dynamic-serving-dns-names=cert-manager-webhook
+          - --dynamic-serving-dns-names=cert-manager-webhook.$(POD_NAMESPACE)
+          - --dynamic-serving-dns-names=cert-manager-webhook.$(POD_NAMESPACE).svc
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          image: quay.io/jetstack/cert-manager-webhook:v1.19.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /livez
+              port: healthcheck
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: cert-manager-webhook
+          ports:
+          - containerPort: 10250
+            name: https
+            protocol: TCP
+          - containerPort: 6080
+            name: healthcheck
+            protocol: TCP
+          - containerPort: 9402
+            name: http-metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: healthcheck
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: false
+        nodeSelector:
+          kubernetes.io/os: linux
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: cert-manager-webhook
+        serviceAccountName: cert-manager-webhook
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-06T00:05:50Z"
+      lastUpdateTime: "2025-12-06T00:05:50Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-06T00:05:37Z"
+      lastUpdateTime: "2025-12-06T00:05:50Z"
+      message: ReplicaSet "cert-manager-webhook-58fd9998b4" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "12"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"api-gateway"},"name":"api-gateway-deployment","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"api-gateway"}},"template":{"metadata":{"labels":{"app":"api-gateway"}},"spec":{"containers":[{"envFrom":[{"secretRef":{"name":"api-gateway-env"}}],"image":"us-central1-docker.pkg.dev/turnkey-cyclist-480023-j5/runpath-repo/api-gateway:v2","name":"api-gateway-container","ports":[{"containerPort":8888}],"volumeMounts":[{"mountPath":"/app/app/","name":"api-gateway-credentials","readOnly":true}]}],"volumes":[{"name":"api-gateway-credentials","secret":{"secretName":"firebase-key"}}]}}}}
+    creationTimestamp: "2025-12-03T23:30:10Z"
+    generation: 12
+    labels:
+      app: api-gateway
+    name: api-gateway-deployment
+    namespace: default
+    resourceVersion: "1764990538495007017"
+    uid: 6cbfaf37-5816-4a53-80c5-47eda5ce2628
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: api-gateway
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-06T03:08:56Z"
+        creationTimestamp: null
+        labels:
+          app: api-gateway
+      spec:
+        containers:
+        - envFrom:
+          - secretRef:
+              name: api-gateway-env
+          image: us-central1-docker.pkg.dev/turnkey-cyclist-480023-j5/runpath-repo/api-gateway:v2
+          imagePullPolicy: IfNotPresent
+          name: api-gateway-container
+          ports:
+          - containerPort: 8888
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/app/
+            name: api-gateway-credentials
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: api-gateway-credentials
+          secret:
+            defaultMode: 420
+            secretName: firebase-key
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-04T19:44:45Z"
+      lastUpdateTime: "2025-12-04T19:44:45Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-03T23:30:10Z"
+      lastUpdateTime: "2025-12-06T03:08:58Z"
+      message: ReplicaSet "api-gateway-deployment-bb4f86c8" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 12
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "18"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"auth"},"name":"auth-deployment","namespace":"default"},"spec":{"replicas":3,"selector":{"matchLabels":{"app":"auth"}},"template":{"metadata":{"labels":{"app":"auth"}},"spec":{"containers":[{"envFrom":[{"secretRef":{"name":"auth-env"}}],"image":"us-central1-docker.pkg.dev/turnkey-cyclist-480023-j5/runpath-repo/auth-service:v2","name":"auth-container","ports":[{"containerPort":8000}],"volumeMounts":[{"mountPath":"/app/creds","name":"firebase-credentials","readOnly":true}]}],"volumes":[{"name":"firebase-credentials","secret":{"secretName":"firebase-config"}}]}}}}
+    creationTimestamp: "2025-12-03T02:29:56Z"
+    generation: 18
+    labels:
+      app: auth
+    name: auth-deployment
+    namespace: default
+    resourceVersion: "1765079539160591004"
+    uid: c75276f6-f4ab-41de-bcbc-35b2a329724e
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 3
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: auth
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-05T09:50:25-05:00"
+        creationTimestamp: null
+        labels:
+          app: auth
+      spec:
+        containers:
+        - envFrom:
+          - secretRef:
+              name: auth-env
+          image: us-central1-docker.pkg.dev/turnkey-cyclist-480023-j5/runpath-repo/auth-service:v2
+          imagePullPolicy: Always
+          name: auth-container
+          ports:
+          - containerPort: 8000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/creds
+            name: firebase-credentials
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: firebase-credentials
+          secret:
+            defaultMode: 420
+            secretName: firebase-config
+  status:
+    availableReplicas: 3
+    conditions:
+    - lastTransitionTime: "2025-12-03T02:29:56Z"
+      lastUpdateTime: "2025-12-05T14:50:37Z"
+      message: ReplicaSet "auth-deployment-849f49fcb6" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-12-07T03:52:19Z"
+      lastUpdateTime: "2025-12-07T03:52:19Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 18
+    readyReplicas: 3
+    replicas: 3
+    updatedReplicas: 3
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"distance-app","component":"osrm-backend"},"name":"distance-deployment","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"distance-app"}},"template":{"metadata":{"labels":{"app":"distance-app","component":"osrm-backend"}},"spec":{"affinity":{"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app","operator":"In","values":["distance-app"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":100}]}},"containers":[{"image":"us-central1-docker.pkg.dev/turnkey-cyclist-480023-j5/runpath-repo/distance-repository:latest","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/nearest/v1/walking/-74.0721,4.7110","port":5000,"scheme":"HTTP"},"initialDelaySeconds":120,"periodSeconds":30,"successThreshold":1,"timeoutSeconds":10},"name":"distance-container","ports":[{"containerPort":5000,"name":"http","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/nearest/v1/walking/-74.0721,4.7110","port":5000,"scheme":"HTTP"},"initialDelaySeconds":60,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":5},"resources":{"limits":{"cpu":"1000m","memory":"2Gi"},"requests":{"cpu":"300m","memory":"1.5Gi"}}}]}}}}
+    creationTimestamp: "2025-12-06T17:49:40Z"
+    generation: 3
+    labels:
+      app: distance-app
+      component: osrm-backend
+    name: distance-deployment
+    namespace: default
+    resourceVersion: "1765080959899663003"
+    uid: 0f277d00-bee1-4754-a444-36393eac9d11
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: distance-app
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: distance-app
+          component: osrm-backend
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                    - distance-app
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - image: us-central1-docker.pkg.dev/turnkey-cyclist-480023-j5/runpath-repo/distance-repository:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /nearest/v1/walking/-74.0721,4.7110
+              port: 5000
+              scheme: HTTP
+            initialDelaySeconds: 120
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: distance-container
+          ports:
+          - containerPort: 5000
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /nearest/v1/walking/-74.0721,4.7110
+              port: 5000
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: "1"
+              memory: 2Gi
+            requests:
+              cpu: 300m
+              memory: 1536Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-06T17:49:40Z"
+      lastUpdateTime: "2025-12-06T17:53:34Z"
+      message: ReplicaSet "distance-deployment-6c74f98d6" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-12-07T04:15:59Z"
+      lastUpdateTime: "2025-12-07T04:15:59Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 3
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-04T17:31:36Z"
+    generation: 1
+    labels:
+      app: frontend-deployment
+      app.kubernetes.io/managed-by: cloud-console
+    name: frontend-deployment
+    namespace: default
+    resourceVersion: "1765079537064175004"
+    uid: 94f90acd-08f6-4c06-a252-9733e02fada7
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 3
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: frontend-deployment
+        app.kubernetes.io/managed-by: cloud-console
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: frontend-deployment
+          app.kubernetes.io/managed-by: cloud-console
+      spec:
+        containers:
+        - env:
+          - name: API_GATEWAY
+            valueFrom:
+              configMapKeyRef:
+                key: API_GATEWAY
+                name: frontend-deployment-config-yftt
+          - name: AUTH_SERVICE
+            valueFrom:
+              configMapKeyRef:
+                key: AUTH_SERVICE
+                name: frontend-deployment-config-yftt
+          - name: DISTANCE_SERVICE
+            valueFrom:
+              configMapKeyRef:
+                key: DISTANCE_SERVICE
+                name: frontend-deployment-config-yftt
+          - name: ROUTES_SERVICE
+            valueFrom:
+              configMapKeyRef:
+                key: ROUTES_SERVICE
+                name: frontend-deployment-config-yftt
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                key: PORT
+                name: frontend-deployment-config-yftt
+          - name: NEXT_PUBLIC_MAPBOX_TOKEN
+            valueFrom:
+              configMapKeyRef:
+                key: NEXT_PUBLIC_MAPBOX_TOKEN
+                name: frontend-deployment-config-yftt
+          image: us-central1-docker.pkg.dev/turnkey-cyclist-480023-j5/runpath-repo/frontend-ssr@sha256:51303a2a66b7e0bef74f198408a42f52c285de5a16e4af152fd82221ca655923
+          imagePullPolicy: IfNotPresent
+          name: frontend-ssr-sha256-1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 3
+    conditions:
+    - lastTransitionTime: "2025-12-04T17:31:36Z"
+      lastUpdateTime: "2025-12-04T17:32:41Z"
+      message: ReplicaSet "frontend-deployment-69f4c7874c" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-12-07T03:52:17Z"
+      lastUpdateTime: "2025-12-07T03:52:17Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 3
+    replicas: 3
+    updatedReplicas: 3
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: "2025-12-06T01:57:39Z"
+    generation: 3
+    labels:
+      app: notification-deployment
+      app.kubernetes.io/managed-by: cloud-console
+    name: notification-deployment
+    namespace: default
+    resourceVersion: "1765079537125423021"
+    uid: c9799eef-ae50-460a-a316-c01e92e93095
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 3
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: notification-deployment
+        app.kubernetes.io/managed-by: cloud-console
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-06T03:19:15Z"
+        creationTimestamp: null
+        labels:
+          app: notification-deployment
+          app.kubernetes.io/managed-by: cloud-console
+      spec:
+        containers:
+        - env:
+          - name: AUTH_SERVICE_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                key: AUTH_SERVICE_ENDPOINT
+                name: notification-deployment-config-b2am
+          - name: SPRING_MAIL_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                key: SPRING_MAIL_PASSWORD
+                name: notification-deployment-config-b2am
+          - name: SPRING_MAIL_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                key: SPRING_MAIL_USERNAME
+                name: notification-deployment-config-b2am
+          - name: SPRING_RABBITMQ_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: SPRING_RABBITMQ_HOST
+                name: notification-deployment-config-b2am
+          - name: SPRING_RABBITMQ_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                key: SPRING_RABBITMQ_PASSWORD
+                name: notification-deployment-config-b2am
+          - name: SPRING_RABBITMQ_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: SPRING_RABBITMQ_PORT
+                name: notification-deployment-config-b2am
+          - name: SPRING_RABBITMQ_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                key: SPRING_RABBITMQ_USERNAME
+                name: notification-deployment-config-b2am
+          image: us-central1-docker.pkg.dev/turnkey-cyclist-480023-j5/runpath-repo/notification-service@sha256:e7b995f3de372a879c96d52174abc860b25d0c4653d6ce80ed4ed78ca02b4115
+          imagePullPolicy: IfNotPresent
+          name: notification-service-sha256-1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 3
+    conditions:
+    - lastTransitionTime: "2025-12-06T01:57:39Z"
+      lastUpdateTime: "2025-12-06T03:19:24Z"
+      message: ReplicaSet "notification-deployment-5b9d49bcf" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-12-07T03:52:17Z"
+      lastUpdateTime: "2025-12-07T03:52:17Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 3
+    readyReplicas: 3
+    replicas: 3
+    updatedReplicas: 3
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"postgres-deployment","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"postgres"}},"template":{"metadata":{"labels":{"app":"postgres"}},"spec":{"containers":[{"env":[{"name":"POSTGRES_DB","value":"routes_db"},{"name":"POSTGRES_USER","value":"routes_user"},{"name":"POSTGRES_PASSWORD","value":"routes_password"},{"name":"PGDATA","value":"/var/lib/postgresql/data/pgdata"}],"image":"postgis/postgis:15-3.3-alpine","name":"postgres","volumeMounts":[{"mountPath":"/var/lib/postgresql/data","name":"postgres-storage"},{"mountPath":"/docker-entrypoint-initdb.d/init.sql","name":"init-sql","subPath":"init.sql"}]}],"volumes":[{"name":"postgres-storage","persistentVolumeClaim":{"claimName":"postgres-pvc"}},{"configMap":{"name":"postgres-init-sql"},"name":"init-sql"}]}}}}
+    creationTimestamp: "2025-12-04T02:07:15Z"
+    generation: 1
+    name: postgres-deployment
+    namespace: default
+    resourceVersion: "1765080954228687014"
+    uid: 2ea2dc6d-f34c-4545-8ce8-386872843440
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: postgres
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: postgres
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_DB
+            value: routes_db
+          - name: POSTGRES_USER
+            value: routes_user
+          - name: POSTGRES_PASSWORD
+            value: routes_password
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+          image: postgis/postgis:15-3.3-alpine
+          imagePullPolicy: IfNotPresent
+          name: postgres
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: postgres-storage
+          - mountPath: /docker-entrypoint-initdb.d/init.sql
+            name: init-sql
+            subPath: init.sql
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+        - configMap:
+            defaultMode: 420
+            name: postgres-init-sql
+          name: init-sql
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-04T02:07:15Z"
+      lastUpdateTime: "2025-12-04T02:07:31Z"
+      message: ReplicaSet "postgres-deployment-77cd89ccf7" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-12-07T04:15:54Z"
+      lastUpdateTime: "2025-12-07T04:15:54Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "6"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"routes-deployment","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"routes"}},"template":{"metadata":{"labels":{"app":"routes"}},"spec":{"containers":[{"env":[{"name":"DB_HOST","valueFrom":{"configMapKeyRef":{"key":"DB_HOST","name":"routes-config"}}},{"name":"DB_PORT","valueFrom":{"configMapKeyRef":{"key":"DB_PORT","name":"routes-config"}}},{"name":"DB_NAME","valueFrom":{"configMapKeyRef":{"key":"DB_NAME","name":"routes-config"}}},{"name":"PORT","valueFrom":{"configMapKeyRef":{"key":"PORT","name":"routes-config"}}},{"name":"NODE_ENV","valueFrom":{"configMapKeyRef":{"key":"NODE_ENV","name":"routes-config"}}},{"name":"CALCULATION_SERVICE_URL","valueFrom":{"configMapKeyRef":{"key":"CALCULATION_SERVICE_URL","name":"routes-config"}}},{"name":"AUTH_SERVICE_URL","valueFrom":{"configMapKeyRef":{"key":"AUTH_SERVICE_URL","name":"routes-config"}}},{"name":"RABBITMQ_EXCHANGE","valueFrom":{"configMapKeyRef":{"key":"RABBITMQ_EXCHANGE","name":"routes-config"}}},{"name":"RABBITMQ_EXCHANGE_TYPE","valueFrom":{"configMapKeyRef":{"key":"RABBITMQ_EXCHANGE_TYPE","name":"routes-config"}}},{"name":"RABBITMQ_ROUTING_KEY","valueFrom":{"configMapKeyRef":{"key":"RABBITMQ_ROUTING_KEY","name":"routes-config"}}},{"name":"RABBITMQ_MAX_RECONNECT_ATTEMPTS","valueFrom":{"configMapKeyRef":{"key":"RABBITMQ_MAX_RECONNECT_ATTEMPTS","name":"routes-config"}}},{"name":"RABBITMQ_RECONNECT_DELAY","valueFrom":{"configMapKeyRef":{"key":"RABBITMQ_RECONNECT_DELAY","name":"routes-config"}}},{"name":"DB_USER","valueFrom":{"secretKeyRef":{"key":"DB_USER","name":"routes-secret"}}},{"name":"DB_PASSWORD","valueFrom":{"secretKeyRef":{"key":"DB_PASSWORD","name":"routes-secret"}}},{"name":"AUTH_SERVICE_JWT_SECRET","valueFrom":{"secretKeyRef":{"key":"AUTH_SERVICE_JWT_SECRET","name":"routes-secret"}}},{"name":"RABBITMQ_URL","valueFrom":{"secretKeyRef":{"key":"RABBITMQ_URL","name":"routes-secret"}}}],"image":"us-central1-docker.pkg.dev/turnkey-cyclist-480023-j5/runpath-repo/routes-service@sha256:43c181b5f2f58b08b66955ebfa2145565dc358973668a50a6c229a3647a65209","name":"routes","ports":[{"containerPort":3000}]}]}}}}
+    creationTimestamp: "2025-12-04T02:07:17Z"
+    generation: 6
+    name: routes-deployment
+    namespace: default
+    resourceVersion: "1764975143640767010"
+    uid: e81a3d91-4a2d-4a9c-a5e3-dc1220a9c592
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: routes
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-12-05T17:52:20-05:00"
+        creationTimestamp: null
+        labels:
+          app: routes
+      spec:
+        containers:
+        - env:
+          - name: DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: DB_HOST
+                name: routes-config
+          - name: DB_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: DB_PORT
+                name: routes-config
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                key: DB_NAME
+                name: routes-config
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                key: PORT
+                name: routes-config
+          - name: NODE_ENV
+            valueFrom:
+              configMapKeyRef:
+                key: NODE_ENV
+                name: routes-config
+          - name: CALCULATION_SERVICE_URL
+            valueFrom:
+              configMapKeyRef:
+                key: CALCULATION_SERVICE_URL
+                name: routes-config
+          - name: AUTH_SERVICE_URL
+            valueFrom:
+              configMapKeyRef:
+                key: AUTH_SERVICE_URL
+                name: routes-config
+          - name: RABBITMQ_EXCHANGE
+            valueFrom:
+              configMapKeyRef:
+                key: RABBITMQ_EXCHANGE
+                name: routes-config
+          - name: RABBITMQ_EXCHANGE_TYPE
+            valueFrom:
+              configMapKeyRef:
+                key: RABBITMQ_EXCHANGE_TYPE
+                name: routes-config
+          - name: RABBITMQ_ROUTING_KEY
+            valueFrom:
+              configMapKeyRef:
+                key: RABBITMQ_ROUTING_KEY
+                name: routes-config
+          - name: RABBITMQ_MAX_RECONNECT_ATTEMPTS
+            valueFrom:
+              configMapKeyRef:
+                key: RABBITMQ_MAX_RECONNECT_ATTEMPTS
+                name: routes-config
+          - name: RABBITMQ_RECONNECT_DELAY
+            valueFrom:
+              configMapKeyRef:
+                key: RABBITMQ_RECONNECT_DELAY
+                name: routes-config
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                key: DB_USER
+                name: routes-secret
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: DB_PASSWORD
+                name: routes-secret
+          - name: AUTH_SERVICE_JWT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: AUTH_SERVICE_JWT_SECRET
+                name: routes-secret
+          - name: RABBITMQ_URL
+            valueFrom:
+              secretKeyRef:
+                key: RABBITMQ_URL
+                name: routes-secret
+          image: us-central1-docker.pkg.dev/turnkey-cyclist-480023-j5/runpath-repo/routes-service@sha256:43c181b5f2f58b08b66955ebfa2145565dc358973668a50a6c229a3647a65209
+          imagePullPolicy: IfNotPresent
+          name: routes
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-04T02:27:04Z"
+      lastUpdateTime: "2025-12-04T02:27:04Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-04T02:07:17Z"
+      lastUpdateTime: "2025-12-05T22:52:23Z"
+      message: ReplicaSet "routes-deployment-776cd59967" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 6
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      components.gke.io/layer: addon
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-03T02:10:52Z"
+    generation: 1
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+      app: managed-prometheus-operator
+      app.kubernetes.io/component: operator
+      app.kubernetes.io/name: gmp-operator
+      app.kubernetes.io/part-of: gmp
+    name: gmp-operator
+    namespace: gmp-system
+    resourceVersion: "1764727898551263018"
+    uid: 39eb2a43-92c0-4db9-bcf2-f12ab56fb40c
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: operator
+        app.kubernetes.io/name: gmp-operator
+        app.kubernetes.io/part-of: gmp
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          components.gke.io/component-name: managed-prometheus
+          components.gke.io/component-version: 0.15.4-gke.3
+        creationTimestamp: null
+        labels:
+          app: managed-prometheus-operator
+          app.kubernetes.io/component: operator
+          app.kubernetes.io/name: gmp-operator
+          app.kubernetes.io/part-of: gmp
+          app.kubernetes.io/version: 0.15.4
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - arm64
+                  - amd64
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+        automountServiceAccountToken: true
+        containers:
+        - args:
+          - --operator-namespace=gmp-system
+          - --public-namespace=gmp-public
+          - --webhook-addr=:10250
+          - --tls-cert-base64=LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVIakNDQW9hZ0F3SUJBZ0lRRi96UW9TakdvTlBNdGMxaVg5UzdpREFOQmdrcWhraUc5dzBCQVFzRkFEQXYKTVMwd0t3WURWUVFERXlSbU1qazRNelUwTmkxa1pUWTBMVFE1T1RBdE9USmxNaTFoTjJJeFkyRmtPVEprT1dRdwpIaGNOTWpVeE1qQXpNREl3TkRBMVdoY05NekF4TWpBeU1ESXdOakExV2pBME1USXdNQVlEVlFRREV5bG5iWEF0CmIzQmxjbUYwYjNJdVoyMXdMWE41YzNSbGJTNXpkbU11WTJ4MWMzUmxjaTVzYjJOaGJEQ0NBU0l3RFFZSktvWkkKaHZjTkFRRUJCUUFEZ2dFUEFEQ0NBUW9DZ2dFQkFLL2k3MG1iNW9SU3k1SjRRVVY5NXFhSEx2ajBCZkFzcWNNWAoxcmlPSlBJdkNRQWNCbGUwVHdCRDVaazdORk9DVFp3WjNsdk5veERnQVJoMU9WcXNZbzQyTGVpaVMyVmIzZFN5ClByUnZndlExOFcvcW05Qm94Q3c5TmhXcm5mZ2RjQThEU3lPZU1ya1pHUzFJVWZuVDdHWFhSMEorRlY2RStqYlgKSUJMY25RUm9QQitkMndqVVAyd2Z4SlB5aGJoVHpIdUcwMGF2MWhuVkdEU1pyNENLMHdKT2xVRk9rN2ZJQ1E3OQpWR3BQQ2VtRXAwRWI5a1k5dzBXSTV2VHJnbjdVNGpDTVNYcEVxTko3MDZZYTNlT3R1cTM5ZWRVcVFNNm0vTDRYCnUrRW8vSWszRDE0OThFRW1WRFUxa04raWlGZmpEN2ZqQVdjMkcybmVKbHI4REpsbmo3Y0NBd0VBQWFPQnNEQ0IKclRBT0JnTlZIUThCQWY4RUJBTUNCYUF3SFFZRFZSMGxCQll3RkFZSUt3WUJCUVVIQXdFR0NDc0dBUVVGQndNQwpNQXdHQTFVZEV3RUIvd1FDTUFBd0h3WURWUjBqQkJnd0ZvQVUyb2o1bitrWTVIMWdwbjBiblFrYVNvcGtJYnN3ClRRWURWUjBSQkVZd1JJSU1aMjF3TFc5d1pYSmhkRzl5Z2hkbmJYQXRiM0JsY21GMGIzSXVaMjF3TFhONWMzUmwKYllJYloyMXdMVzl3WlhKaGRHOXlMbWR0Y0MxemVYTjBaVzB1YzNaak1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQgpnUUJDV2NyWTBKWjl4VS85VHlzYksxL1VLdjVQbFpXb2l0bWc2K005bExNd2pyakh6UEZNK0dvT0VNMHF6dWpYCmwvM1A5bHVUd0FrSkhqTklVMkcrZS80N3puUkEvUitEdDdzYTFiZnFaNWk4T1gxQ215NDBqSUt1TUlRV3VyYjYKSi9pVnBoQ0JDdHlydEpVRVBkYTlod2J3Vkl4SWcyb3hOdGtNemZYWVhHRk5Eem94VnVPaUc4MXdoYk1YMjBkYgpBN1Q4MXhOMnFGWUZQd0N4N1pFdGQwVTUrWjhNOWZUaHJzRTA5TG1FUWlWcXpldFVjbWFrOEdWdm5hVlo1TWJOCnRiVnJPbk9tTmx6NHpER3Evb0h4ejUwQlJsOWhnSGZaSzJEN1ozT3BkNm1RT1lzMFM4ZlZ1NCsxYVBBajI2ZzIKeUJQaTd2OXV1VWNxUFRHcVpRMmJ5bGVyRlJ0NlMyR2YxcmU2Rld3RnJUS3RxOTUxNGdZWXdGUVAvYjNaWnFiegpQeDdXZFdxOFNYSk9SUUF6RVpIejkrTTZyMHNZa0JTVGplZ294TWh1THVMbTYrbkR4aThuejVFSi9rMWV5amZ4ClVJSHQ0QU45YjJibnZtWkdhdmFPQWJuV056YjFvRUd1Z3BVRlVLRkM2NU1QbDE1Ym9NYU9rVGozcmRPTTFSbHQKNFN3PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+          - --tls-key-base64=LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb2dJQkFBS0NBUUVBcitMdlNadm1oRkxMa25oQlJYM21wb2N1K1BRRjhDeXB3eGZXdUk0azhpOEpBQndHClY3UlBBRVBsbVRzMFU0Sk5uQm5lVzgyakVPQUJHSFU1V3F4aWpqWXQ2S0pMWlZ2ZDFMSSt0RytDOURYeGIrcWIKMEdqRUxEMDJGYXVkK0Ixd0R3TkxJNTR5dVJrWkxVaFIrZFBzWmRkSFFuNFZYb1Q2TnRjZ0V0eWRCR2c4SDUzYgpDTlEvYkIvRWsvS0Z1RlBNZTRiVFJxL1dHZFVZTkptdmdJclRBazZWUVU2VHQ4Z0pEdjFVYWs4SjZZU25RUnYyClJqM0RSWWptOU91Q2Z0VGlNSXhKZWtTbzBudlRwaHJkNDYyNnJmMTUxU3BBenFiOHZoZTc0U2o4aVRjUFhqM3cKUVNaVU5UV1EzNktJVitNUHQrTUJaelliYWQ0bVd2d01tV2VQdHdJREFRQUJBb0lCQUN2QytPcUZvWnMyeG5QUQorOXlBY016cVFhT3JnM2E0aGh5R1orUlBhWjNnV2dydTdoMFFQYi9CSlBVMUo5WEhTK3dVKzZBM3orUzQ5MHpRCmpjNmpxWG5jdlJ0dWxmZklIYTk0RWVYdkFOUW1QOFlxeDAzWlkwWG1qUGhqVk5DUThucXB4UjQ5bEQwOW8yZ0MKNEhLYWFlMEUzVFFNRHVFUGtQbm9HSkRZMXpCckhNS21xT0o3TjMzd0ZFb2ltL05DK3IvZ3hDRWJMTHgwUWFmNQpYdUhxSGc4amNFdldwSkxsTXlpd2UxR3VBSTVEZ2U5b21LRUtwZGJIU1FYa1lhSzZxRFJnZVVnVDc0RXhjUHh5CmhmVVFwcXZCTE9TZ3YvMnVhdEJhTFp2WS9Sak81M1lMZW1qdDhkNkF4UFhSM3hHM1BsbHhYVDV3R1lVSWJWbWEKcG1hK2haRUNnWUVBNmVKRU9uazZnNjVZTHdmRGREdVYvNDVHOFl5Rzk1UlhTUm1uNXpxMml5a1Bkak9ZYzJPQwp6U2lXVFNMVUxuKzdsRGt2NkNLdThoekhKQWsvc0hld29oUmxUbW1GaEhMMXdFc05aVkpvOHZSLzRmcEJnRHJNCkk0NGlWRXlXc0creXVOOGR5YkRhaVgxVzNxeGd3aExaaExLSkJPaVFhQ2VwN1pwRG84dENxaFVDZ1lFQXdJU3kKNXprbitUUVJkcTIwVTQzRzErY3ljVkdzVDFoNit6ZkkwdTJzMStQRjlhWWtKTU9GdWtqZ2UwUXhrU1kyZDQ3RwpSL04zR0xwR25hR0QweXdZSFpYd3NrWFM5aks3cy85SGxjYURQT2F0UjJHZVcyN2NJTVFlQVRlMnZMdVozNnFCClF4bHhoWUc2SjlBOXhkWXBLVXVBb05lODU3V1pFaUdHWTlKK2dac0NnWUJ0bWxOTzg3Q3dOT3V1WG4wQjQwcVAKMENUKzNWUUNnY25Gdi9nbkxDU1BZbGFVbGVsRGFjYktUZExob3dpOElhL043bDY4OGtQNXdmS3d1SVRZTmI3WQp0YVlqOE45WkNtYVFEcHZnZDVZbkJOMUpFUFhSR2J6QWpNTVpyaXFQMUVoMHlsb3pRbVduT00yVTNFTWJyNm12CnZkcm9LZlJDV3hRTy9OUGwxa01QWVFLQmdGU0NyQXBHazk2WVZjWTBNSUd4TGdXZTd3ekJucE5pTXZKT3BiQzYKTnZLNmdTNzVsTW95cm1SOUUxWHBOSjBVR2pyWGlRRVN4a2dybFU0akZieEFrZ0dDelp0a2ZWd29IeSsvczB2egpUYThSVUNXU203SmxjdXBMVFNTWnNYVWVJVWtIRHlGR2JRZi9UNW1rbDBsZVhzbEs1SmMydlMwMkVaRGMrS0tmClIzdGJBb0dBUnhxYzNqODRyUnhabXJSOTZNaWdEb1BjOThaM3l1QTBZWkc2ckJPb2RiMGpjZzJBbnFKOElKYnYKdmZxbEd4U2NLTUxCMVdLV25kNzNYNk1PSVJMYWRyakVtclRGclkxbWtxSlkrNUxFOGhodFZkNjJMeC81L3hQLwpTaGxWRmpEeldHeVRJcWdXZTVpM0x1NTlBMjdXWkdhQXlzWnJtWGt0WWovdWtpU3dKSlE9Ci0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg==
+          - --project-id=turnkey-cyclist-480023-j5
+          - --location=us-central1-a
+          - --cluster=runpath-cluster
+          env:
+          - name: GCE_METADATA_HOST
+            value: 169.254.169.254
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/prometheus-engine/operator:v0.15.4-gke.0@sha256:6208d08a2ee884e7d72669b32f2eb9c24386bfb050e3035b5ef16663fd5e4d1d
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 18081
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: operator
+          ports:
+          - containerPort: 10250
+            name: web
+            protocol: TCP
+          - containerPort: 18080
+            name: metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /readyz
+              port: 18081
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: 2G
+            requests:
+              cpu: 1m
+              memory: 16M
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            privileged: false
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/tls/private
+            name: certs
+        dnsPolicy: ClusterFirst
+        priorityClassName: gmp-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: operator
+        serviceAccountName: operator
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: amd64
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+        - key: components.gke.io/gke-managed-components
+          operator: Exists
+        volumes:
+        - emptyDir: {}
+          name: certs
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-03T02:11:38Z"
+      lastUpdateTime: "2025-12-03T02:11:38Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-03T02:10:52Z"
+      lastUpdateTime: "2025-12-03T02:11:38Z"
+      message: ReplicaSet "gmp-operator-5bb7bd6dc6" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      components.gke.io/layer: addon
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-03T02:10:52Z"
+    generation: 2
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+    name: rule-evaluator
+    namespace: gmp-system
+    resourceVersion: "1764727898890303001"
+    uid: 733c37c2-e1b5-4521-bbe4-5c1f8d9dd5e0
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/name: rule-evaluator
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+          components.gke.io/component-name: managed-prometheus
+          components.gke.io/component-version: 0.15.4-gke.3
+        creationTimestamp: null
+        labels:
+          app: managed-prometheus-rule-evaluator
+          app.kubernetes.io/name: rule-evaluator
+          app.kubernetes.io/version: 0.15.4
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - arm64
+                  - amd64
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+        automountServiceAccountToken: true
+        containers:
+        - args:
+          - --config-file=/prometheus/config/config.yaml
+          - --config-file-output=/prometheus/config_out/config.yaml
+          - --config-dir=/etc/rules
+          - --config-dir-output=/prometheus/rules_out
+          - --watched-dir=/etc/secrets
+          - --reload-url=http://127.0.0.1:19092/-/reload
+          - --ready-url=http://127.0.0.1:19092/-/ready
+          - --listen-address=:19093
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/prometheus-engine/config-reloader:v0.15.4-gke.0@sha256:d829f291c33fd8eb83073047903ffcc1afa4fce7dea146ad6ed1f409f788d298
+          imagePullPolicy: IfNotPresent
+          name: config-reloader
+          ports:
+          - containerPort: 19093
+            name: cfg-rel-metrics
+            protocol: TCP
+          resources:
+            limits:
+              memory: 32M
+            requests:
+              cpu: 1m
+              memory: 4M
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            privileged: false
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /prometheus/config
+            name: config
+            readOnly: true
+          - mountPath: /prometheus/config_out
+            name: config-out
+          - mountPath: /etc/rules
+            name: rules
+            readOnly: true
+          - mountPath: /prometheus/rules_out
+            name: rules-out
+          - mountPath: /etc/secrets
+            name: rules-secret
+            readOnly: true
+        - args:
+          - --config.file=/prometheus/config_out/config.yaml
+          - --web.listen-address=:19092
+          - --export.user-agent-mode=gke
+          env:
+          - name: GCE_METADATA_HOST
+            value: 169.254.169.254
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/prometheus-engine/rule-evaluator:v0.15.4-gke.0@sha256:3fd60d642225e3f431ff038583a1ef96c98fc48c425024466d9970f9086052fc
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /-/healthy
+              port: 19092
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: evaluator
+          ports:
+          - containerPort: 19092
+            name: r-eval-metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /-/ready
+              port: 19092
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: 1G
+            requests:
+              cpu: 1m
+              memory: 16M
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            privileged: false
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /prometheus/config_out
+            name: config-out
+            readOnly: true
+          - mountPath: /etc/rules
+            name: rules-out
+            readOnly: true
+          - mountPath: /etc/secrets
+            name: rules-secret
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - /bin/bash
+          - -c
+          - touch /prometheus/config_out/config.yaml
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/gke-distroless/bash:gke_distroless_20250707.00_p0@sha256:899ee9283648aec99fb2d6c7b90e19ba8d5edbe6c281d13014915bd60cf082fa
+          imagePullPolicy: IfNotPresent
+          name: config-init
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            privileged: false
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /prometheus/config_out
+            name: config-out
+        priorityClassName: gmp-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: collector
+        serviceAccountName: collector
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: amd64
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+        - key: components.gke.io/gke-managed-components
+          operator: Exists
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: rule-evaluator
+          name: config
+        - emptyDir: {}
+          name: config-out
+        - configMap:
+            defaultMode: 420
+            name: rules-generated
+          name: rules
+        - emptyDir: {}
+          name: rules-out
+        - name: rules-secret
+          secret:
+            defaultMode: 420
+            secretName: rules
+  status:
+    conditions:
+    - lastTransitionTime: "2025-12-03T02:11:38Z"
+      lastUpdateTime: "2025-12-03T02:11:38Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-03T02:10:52Z"
+      lastUpdateTime: "2025-12-03T02:11:38Z"
+      message: ReplicaSet "rule-evaluator-76b79f68fc" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 2
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      meta.helm.sh/release-name: ingress-nginx
+      meta.helm.sh/release-namespace: ingress-nginx
+    creationTimestamp: "2025-12-05T16:48:01Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: ingress-nginx
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: ingress-nginx
+      app.kubernetes.io/part-of: ingress-nginx
+      app.kubernetes.io/version: 1.14.1
+      helm.sh/chart: ingress-nginx-4.14.1
+    name: ingress-nginx-controller
+    namespace: ingress-nginx
+    resourceVersion: "1765079556665007019"
+    uid: e83bf29f-19d6-4e62-b72f-8fb1c444c926
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: controller
+        app.kubernetes.io/instance: ingress-nginx
+        app.kubernetes.io/name: ingress-nginx
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: controller
+          app.kubernetes.io/instance: ingress-nginx
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: ingress-nginx
+          app.kubernetes.io/part-of: ingress-nginx
+          app.kubernetes.io/version: 1.14.1
+          helm.sh/chart: ingress-nginx-4.14.1
+      spec:
+        automountServiceAccountToken: true
+        containers:
+        - args:
+          - /nginx-ingress-controller
+          - --publish-service=$(POD_NAMESPACE)/ingress-nginx-controller
+          - --election-id=ingress-nginx-leader
+          - --controller-class=k8s.io/ingress-nginx
+          - --ingress-class=nginx
+          - --configmap=$(POD_NAMESPACE)/ingress-nginx-controller
+          - --validating-webhook=:8443
+          - --validating-webhook-certificate=/usr/local/certificates/cert
+          - --validating-webhook-key=/usr/local/certificates/key
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: LD_PRELOAD
+            value: /usr/local/lib/libmimalloc.so
+          image: registry.k8s.io/ingress-nginx/controller:v1.14.1@sha256:f95a79b85fb93ac3de752c71a5c27d5ceae10a18b61904dec224c1c6a4581e47
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /wait-shutdown
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: controller
+          ports:
+          - containerPort: 80
+            name: http
+            protocol: TCP
+          - containerPort: 443
+            name: https
+            protocol: TCP
+          - containerPort: 8443
+            name: webhook
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 100m
+              memory: 90Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+              - NET_BIND_SERVICE
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+            runAsGroup: 82
+            runAsNonRoot: true
+            runAsUser: 101
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /usr/local/certificates/
+            name: webhook-cert
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: ingress-nginx
+        serviceAccountName: ingress-nginx
+        terminationGracePeriodSeconds: 300
+        volumes:
+        - name: webhook-cert
+          secret:
+            defaultMode: 420
+            secretName: ingress-nginx-admission
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-05T16:48:01Z"
+      lastUpdateTime: "2025-12-05T16:48:39Z"
+      message: ReplicaSet "ingress-nginx-controller-696dc57956" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-12-07T03:52:36Z"
+      lastUpdateTime: "2025-12-07T03:52:36Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-03T02:10:16Z"
+    generation: 1
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+      k8s-app: event-exporter
+      kubernetes.io/cluster-service: "true"
+      version: v0.4.0
+    name: event-exporter-gke
+    namespace: kube-system
+    resourceVersion: "1764727914502335018"
+    uid: 4ec649dd-b7a0-4b3b-b909-e38bc1a2b448
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        k8s-app: event-exporter
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          components.gke.io/component-name: event-exporter
+          components.gke.io/component-version: 1.33.9-gke.0
+        creationTimestamp: null
+        labels:
+          k8s-app: event-exporter
+          version: v0.4.0
+      spec:
+        containers:
+        - command:
+          - /event-exporter
+          - -sink-opts=-stackdriver-resource-model=new -endpoint=https://logging.googleapis.com
+          - -prometheus-endpoint=:8080
+          - -enable-pod-owner-label=true
+          - -system-namespaces=kube-system,istio-system,knative-serving,gke-system,config-management-system,gmp-system,gke-managed-cim,gke-managed-volumepopulator,gke-managed-checkpointing,gke-managed-lustrecsi,gke-managed-otel
+          env:
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /var/run/token_broker/adc/google-application-credentials.json
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/event-exporter:event-exporter-v0.5.2-gke.6@sha256:76250369e72038ac25c521a7f5f980326f81245f8b7c2caac2c243429b44a81c
+          imagePullPolicy: IfNotPresent
+          name: event-exporter
+          resources:
+            requests:
+              cpu: 3m
+              memory: 100Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/token_broker/ksa
+            name: token-broker-ksa
+            readOnly: true
+          - mountPath: /var/run/token_broker/adc
+            name: token-broker-adc
+            readOnly: true
+        - command:
+          - /monitor
+          - --api-override=https://monitoring.googleapis.com/
+          - --source=event_exporter:http://localhost:8080?metricsPrefix=container.googleapis.com/internal/addons&whitelisted=stackdriver_sink_received_entry_count,stackdriver_sink_request_count,stackdriver_sink_successfully_sent_entry_count
+          - --source=event_exporter:http://localhost:8080?metricsPrefix=kubernetes.io/internal/addons&customResourceType=k8s_container&customLabels[project_id]&customLabels[location]&customLabels[cluster_name]&customLabels[namespace_name]=kube-system&customLabels[pod_name]=event-exporter-$NODE_NAME&customLabels[container_name]=event-exporter&whitelisted=stackdriver_sink_records_latency_seconds,podlabel_cache_ops_count,podlabel_get_count,podlabel_nolabel_pod_cache_ops_count
+          - --pod-id=$(POD_NAME)
+          - --namespace-id=$(POD_NAMESPACE)
+          - --node-name=$(NODE_NAME)
+          env:
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /var/run/token_broker/adc/google-application-credentials.json
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/prometheus-to-sd:v0.12.1-gke.24@sha256:4e76d5f407e7a072f1f26dd1d8b019950d1c7632ed96fdd19315f664413c9b82
+          imagePullPolicy: IfNotPresent
+          name: prometheus-to-sd-exporter
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/token_broker/ksa
+            name: token-broker-ksa
+            readOnly: true
+          - mountPath: /var/run/token_broker/adc
+            name: token-broker-adc
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - /node_token_broker_init
+          - --audience=https://container.googleapis.com/v1/projects/536699234122/locations/us-central1-a/clusters/runpath-cluster/generateClusterNodeAgentToken
+          - --token_url=https://container.googleapis.com/v1/projects/536699234122/locations/us-central1-a/clusters/runpath-cluster/generateClusterNodeAgentToken
+          - --token_file=/var/run/token_broker/ksa/token
+          - --output_path=/var/run/token_broker/adc/google-application-credentials.json
+          - --project_id=turnkey-cyclist-480023-j5
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/node_token_broker/init:gke_node_token_broker_init_20250407.00_p0@sha256:8c161bd0d3f2ffc1d580f8b28a2a848cdc1867a84ff8abf7fd6908291697a075
+          imagePullPolicy: IfNotPresent
+          name: token-broker-adc-init
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/token_broker/adc
+            name: token-broker-adc
+        nodeSelector:
+          kubernetes.io/os: linux
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: event-exporter-sa
+        serviceAccountName: event-exporter-sa
+        terminationGracePeriodSeconds: 120
+        tolerations:
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+        - key: components.gke.io/gke-managed-components
+          operator: Exists
+        volumes:
+        - hostPath:
+            path: /etc/ssl/certs
+            type: Directory
+          name: ssl-certs
+        - name: token-broker-ksa
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: https://container.googleapis.com/v1/projects/536699234122/locations/us-central1-a/clusters/runpath-cluster/generateClusterNodeAgentToken
+                expirationSeconds: 3600
+                path: token
+        - emptyDir: {}
+          name: token-broker-adc
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-03T02:11:54Z"
+      lastUpdateTime: "2025-12-03T02:11:54Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-03T02:10:16Z"
+      lastUpdateTime: "2025-12-03T02:11:54Z"
+      message: ReplicaSet "event-exporter-gke-658c9fc4f7" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      components.gke.io/layer: addon
+      credential-normal-mode: "true"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-03T02:10:37Z"
+    generation: 2
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+      k8s-app: konnectivity-agent
+    name: konnectivity-agent
+    namespace: kube-system
+    resourceVersion: "1765079541299871024"
+    uid: fbfc53c4-fe1c-43d5-bf96-29e313ad5a15
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        k8s-app: konnectivity-agent
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+          components.gke.io/component-name: konnectivitynetworkproxy-combined
+          components.gke.io/component-version: 1.15.8
+        creationTimestamp: null
+        labels:
+          k8s-app: konnectivity-agent
+      spec:
+        containers:
+        - args:
+          - --logtostderr=true
+          - --ca-cert=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          - --proxy-server-host=10.128.0.5
+          - --proxy-server-port=8132
+          - --health-server-port=8093
+          - --admin-server-port=8094
+          - --sync-interval=5s
+          - --sync-interval-cap=30s
+          - --sync-forever=true
+          - --probe-interval=5s
+          - --keepalive-time=60s
+          - --service-account-token-path=/var/run/secrets/tokens/konnectivity-agent-token
+          - --enable-profiling
+          - --count-server-leases
+          - --server-count-source=max
+          - --v=3
+          command:
+          - /proxy-agent
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/proxy-agent:v0.31.3-gke.1@sha256:aa89e06b001dd7ef9e9082de3da7ef4b7995c6c857e905d3810eb9901664158f
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8093
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+          name: konnectivity-agent
+          resources:
+            limits:
+              memory: 125Mi
+            requests:
+              cpu: 10m
+              memory: 30Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/secrets/tokens
+            name: konnectivity-agent-token
+        - env:
+          - name: GOMAXPROCS
+            value: "2"
+          - name: COLLECTOR_CONFIG_PATH
+            value: /conf/konnectivity-agent-metrics-collector-config-data.textproto
+          - name: SPLIT_GAUGE_BUFFER
+            value: "true"
+          - name: PROJECT_NUMBER
+            value: "536699234122"
+          - name: LOCATION
+            value: us-central1-a
+          - name: CLUSTER_NAME
+            value: runpath-cluster
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: CONTAINER_NAME
+            value: konnectivity-agent-metrics-collector
+          - name: COMPONENT_VERSION
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.annotations['components.gke.io/component-version']
+          - name: COMPONENT_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.annotations['components.gke.io/component-name']
+          - name: TOKEN_SOURCE_MODE
+            value: MODE_TOKEN_BROKER_WITH_FALLBACK
+          - name: GKE_NODE_SYSTEM_WORKLOAD_CREDENTIALS
+            value: /var/run/token_broker/adc/google-application-credentials.json
+          - name: GKE_HOSTNAME
+            value: container.googleapis.com
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/gke-metrics-collector:20250508_2300_RC0@sha256:d074c77bdc0ee1c4245113e62d93ef1ed6f1a51960ea854a972861a6a0c774ce
+          imagePullPolicy: IfNotPresent
+          name: konnectivity-agent-metrics-collector
+          resources:
+            limits:
+              cpu: "1"
+              memory: 30Mi
+            requests:
+              cpu: 5m
+              memory: 30Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /conf
+            name: konnectivity-agent-metrics-collector-config-map-vol
+          - mountPath: /var/run/token_broker/ksa
+            name: token-broker-ksa
+            readOnly: true
+          - mountPath: /var/run/token_broker/adc
+            name: token-broker-adc
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - /node_token_broker_init
+          - --audience=https://container.googleapis.com/v1/projects/536699234122/locations/us-central1-a/clusters/runpath-cluster/generateClusterNodeAgentToken
+          - --token_url=https://container.googleapis.com/v1/projects/536699234122/locations/us-central1-a/clusters/runpath-cluster/generateClusterNodeAgentToken
+          - --token_file=/var/run/token_broker/ksa/token
+          - --output_path=/var/run/token_broker/adc/google-application-credentials.json
+          - --project_id=turnkey-cyclist-480023-j5
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/node_token_broker/init:gke_node_token_broker_init_20250407.00_p0@sha256:8c161bd0d3f2ffc1d580f8b28a2a848cdc1867a84ff8abf7fd6908291697a075
+          imagePullPolicy: IfNotPresent
+          name: token-broker-adc-init
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/token_broker/adc
+            name: token-broker-adc
+        nodeSelector:
+          beta.kubernetes.io/os: linux
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+          runAsGroup: 1000
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: konnectivity-agent
+        serviceAccountName: konnectivity-agent
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: sandbox.gke.io/runtime
+          operator: Equal
+          value: gvisor
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+        - key: components.gke.io/gke-managed-components
+          operator: Exists
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              k8s-app: konnectivity-agent
+          maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+        - labelSelector:
+            matchLabels:
+              k8s-app: konnectivity-agent
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+        volumes:
+        - name: konnectivity-agent-token
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: system:konnectivity-server
+                expirationSeconds: 3600
+                path: konnectivity-agent-token
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: konnectivity-agent-metrics-collector-config-data
+              path: konnectivity-agent-metrics-collector-config-data.textproto
+            name: konnectivity-agent-metrics-collector-config-map
+          name: konnectivity-agent-metrics-collector-config-map-vol
+        - name: token-broker-ksa
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: https://container.googleapis.com/v1/projects/536699234122/locations/us-central1-a/clusters/runpath-cluster/generateClusterNodeAgentToken
+                expirationSeconds: 3600
+                path: token
+        - emptyDir: {}
+          name: token-broker-adc
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: "2025-12-03T02:10:37Z"
+      lastUpdateTime: "2025-12-03T02:12:13Z"
+      message: ReplicaSet "konnectivity-agent-5c58cd5794" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-12-07T03:52:21Z"
+      lastUpdateTime: "2025-12-07T03:52:21Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 2
+    replicas: 2
+    updatedReplicas: 2
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      components.gke.io/layer: addon
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-03T02:10:39Z"
+    generation: 1
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+      k8s-app: konnectivity-agent-autoscaler
+      kubernetes.io/cluster-service: "true"
+    name: konnectivity-agent-autoscaler
+    namespace: kube-system
+    resourceVersion: "1764727897597855004"
+    uid: 0313c831-7c72-4191-9e91-a507030e85d5
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        k8s-app: konnectivity-agent-autoscaler
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+          components.gke.io/component-name: konnectivitynetworkproxy-combined
+          components.gke.io/component-version: 1.15.8
+        creationTimestamp: null
+        labels:
+          k8s-app: konnectivity-agent-autoscaler
+      spec:
+        containers:
+        - command:
+          - /cluster-proportional-autoscaler
+          - --namespace=kube-system
+          - --configmap=konnectivity-agent-autoscaler-config
+          - --target=deployment/konnectivity-agent
+          - --logtostderr=true
+          - --v=2
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/cluster-proportional-autoscaler:v1.9.1-gke.20@sha256:fd37d45c59588c4877d214b48c30fd435438a1ba7affbd9abfee2e3535f09678
+          imagePullPolicy: IfNotPresent
+          name: autoscaler
+          resources:
+            requests:
+              cpu: 10m
+              memory: 10M
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          beta.kubernetes.io/os: linux
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: konnectivity-agent-cpha
+        serviceAccountName: konnectivity-agent-cpha
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+        - key: components.gke.io/gke-managed-components
+          operator: Exists
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-03T02:11:37Z"
+      lastUpdateTime: "2025-12-03T02:11:37Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-03T02:10:39Z"
+      lastUpdateTime: "2025-12-03T02:11:37Z"
+      message: ReplicaSet "konnectivity-agent-autoscaler-6d9956645f" has successfully
+        progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-03T02:09:58Z"
+    generation: 2
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+      k8s-app: kube-dns
+      kubernetes.io/cluster-service: "true"
+    name: kube-dns
+    namespace: kube-system
+    resourceVersion: "1765080911473999022"
+    uid: 4f51e5f5-dafd-4cb3-b96f-e4769ff3d1e9
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        k8s-app: kube-dns
+    strategy:
+      rollingUpdate:
+        maxSurge: 10%
+        maxUnavailable: 0
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          components.gke.io/component-name: kubedns
+          components.gke.io/component-version: 33.2.6
+          prometheus.io/port: "10054"
+          prometheus.io/scrape: "true"
+          scheduler.alpha.kubernetes.io/critical-pod: ""
+        creationTimestamp: null
+        labels:
+          k8s-app: kube-dns
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: k8s-app
+                    operator: In
+                    values:
+                    - kube-dns
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - args:
+          - --domain=cluster.local.
+          - --dns-port=10053
+          - --config-dir=/kube-dns-config
+          - --v=2
+          env:
+          - name: PROMETHEUS_PORT
+            value: "10055"
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/k8s-dns-kube-dns:1.26.4-gke.7@sha256:1d2d3f962be36b000d5d429fe950f2b8a43c1501a64b7fae387ec1422878a235
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /healthcheck/kubedns
+              port: 10054
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: kubedns
+          ports:
+          - containerPort: 10053
+            name: dns-local
+            protocol: UDP
+          - containerPort: 10053
+            name: dns-tcp-local
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /readiness
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              memory: 210Mi
+            requests:
+              cpu: 100m
+              memory: 70Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1001
+            runAsUser: 1001
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /kube-dns-config
+            name: kube-dns-config
+        - args:
+          - -v=2
+          - -logtostderr
+          - -configDir=/etc/k8s/dns/dnsmasq-nanny
+          - -restartDnsmasq=true
+          - --
+          - -k
+          - --cache-size=1000
+          - --no-negcache
+          - --dns-forward-max=1500
+          - --log-facility=-
+          - --server=/cluster.local/127.0.0.1#10053
+          - --server=/in-addr.arpa/127.0.0.1#10053
+          - --server=/ip6.arpa/127.0.0.1#10053
+          - --max-ttl=30
+          - --max-cache-ttl=30
+          - --max-tcp-connections=200
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/k8s-dns-dnsmasq-nanny:1.26.4-gke.7@sha256:392e7c5ea5ce1d0eb2c296ba112e6d1edefc8dfbc25a89a02429a3e8e82826ce
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /healthcheck/dnsmasq
+              port: 10054
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: dnsmasq
+          ports:
+          - containerPort: 53
+            name: dns
+            protocol: UDP
+          - containerPort: 53
+            name: dns-tcp
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 150m
+              memory: 20Mi
+          securityContext:
+            capabilities:
+              add:
+              - NET_BIND_SERVICE
+              - SETGID
+              drop:
+              - all
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/k8s/dns/dnsmasq-nanny
+            name: kube-dns-config
+        - args:
+          - --v=2
+          - --probe=kubedns,127.0.0.1:10053,kubernetes.default.svc.cluster.local,5,SRV
+          - --probe=dnsmasq,127.0.0.1:53,kubernetes.default.svc.cluster.local,5,SRV
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/k8s-dns-sidecar:1.26.4-gke.7@sha256:1b3d3b744fc69cd2bfee58946056f80522142b9d7ed8236409e0e2a409492d1c
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /metrics
+              port: 10054
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: sidecar
+          ports:
+          - containerPort: 10054
+            name: metrics
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1001
+            runAsUser: 1001
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - env:
+          - name: GOMAXPROCS
+            value: "2"
+          - name: COLLECTOR_CONFIG_PATH
+            value: /conf/kubedns-metrics-collector-config-data.textproto,/conf/sidecar-metrics-collector-config-data.textproto
+          - name: SPLIT_GAUGE_BUFFER
+            value: "true"
+          - name: PROJECT_NUMBER
+            value: "536699234122"
+          - name: LOCATION
+            value: us-central1-a
+          - name: CLUSTER_NAME
+            value: runpath-cluster
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: CONTAINER_NAME
+            value: kubedns-metrics-collector
+          - name: COMPONENT_VERSION
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.annotations['components.gke.io/component-version']
+          - name: COMPONENT_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.annotations['components.gke.io/component-name']
+          - name: TOKEN_SOURCE_MODE
+            value: MODE_TOKEN_BROKER_WITH_FALLBACK
+          - name: GKE_NODE_SYSTEM_WORKLOAD_CREDENTIALS
+            value: /var/run/token_broker/adc/google-application-credentials.json
+          - name: GKE_HOSTNAME
+            value: container.googleapis.com
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/gke-metrics-collector:20250821_2300_RC0@sha256:44b242f7acad93034bf7c5d67009b5feec1eafcc53840546225b00cb03a53d37
+          imagePullPolicy: IfNotPresent
+          name: kubedns-metrics-collector
+          resources:
+            limits:
+              cpu: "1"
+              memory: 45Mi
+            requests:
+              cpu: 10m
+              memory: 45Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1001
+            runAsUser: 1001
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /conf
+            name: kubedns-metrics-collector-config-map-vol
+          - mountPath: /var/run/token_broker/ksa
+            name: token-broker-ksa
+            readOnly: true
+          - mountPath: /var/run/token_broker/adc
+            name: token-broker-adc
+            readOnly: true
+        dnsPolicy: Default
+        initContainers:
+        - command:
+          - /node_token_broker_init
+          - --audience=https://container.googleapis.com/v1/projects/536699234122/locations/us-central1-a/clusters/runpath-cluster/generateClusterNodeAgentToken
+          - --token_url=https://container.googleapis.com/v1/projects/536699234122/locations/us-central1-a/clusters/runpath-cluster/generateClusterNodeAgentToken
+          - --token_file=/var/run/token_broker/ksa/token
+          - --output_path=/var/run/token_broker/adc/google-application-credentials.json
+          - --project_id=turnkey-cyclist-480023-j5
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/node_token_broker/init:gke_node_token_broker_init_20250407.00_p0@sha256:8c161bd0d3f2ffc1d580f8b28a2a848cdc1867a84ff8abf7fd6908291697a075
+          imagePullPolicy: IfNotPresent
+          name: token-broker-adc-init
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/token_broker/adc
+            name: token-broker-adc
+        nodeSelector:
+          kubernetes.io/os: linux
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 65534
+          seccompProfile:
+            type: RuntimeDefault
+          supplementalGroups:
+          - 65534
+        serviceAccount: kube-dns
+        serviceAccountName: kube-dns
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - key: components.gke.io/gke-managed-components
+          operator: Exists
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: kube-dns
+            optional: true
+          name: kube-dns-config
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: kubedns-metrics-collector-config-data
+              path: kubedns-metrics-collector-config-data.textproto
+            - key: sidecar-metrics-collector-config-data
+              path: sidecar-metrics-collector-config-data.textproto
+            name: kubedns-metrics-collector-config-map
+          name: kubedns-metrics-collector-config-map-vol
+        - name: token-broker-ksa
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: https://container.googleapis.com/v1/projects/536699234122/locations/us-central1-a/clusters/runpath-cluster/generateClusterNodeAgentToken
+                expirationSeconds: 3600
+                path: token
+        - emptyDir: {}
+          name: token-broker-adc
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: "2025-12-03T02:09:58Z"
+      lastUpdateTime: "2025-12-03T02:12:18Z"
+      message: ReplicaSet "kube-dns-7b8564d9c6" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-12-07T04:15:11Z"
+      lastUpdateTime: "2025-12-07T04:15:11Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 2
+    replicas: 2
+    updatedReplicas: 2
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-03T02:10:41Z"
+    generation: 1
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+      k8s-app: kube-dns-autoscaler
+      kubernetes.io/cluster-service: "true"
+    name: kube-dns-autoscaler
+    namespace: kube-system
+    resourceVersion: "1764727896564799023"
+    uid: 0011a3dd-ef07-43ab-b3e0-0dd224444555
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        k8s-app: kube-dns-autoscaler
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          components.gke.io/component-name: kubedns
+          components.gke.io/component-version: 33.2.6
+        creationTimestamp: null
+        labels:
+          k8s-app: kube-dns-autoscaler
+      spec:
+        containers:
+        - command:
+          - /cluster-proportional-autoscaler
+          - --namespace=kube-system
+          - --configmap=kube-dns-autoscaler
+          - --target=Deployment/kube-dns
+          - --default-params={"linear":{"coresPerReplica":256,"nodesPerReplica":16,"preventSinglePointFailure":true,"includeUnschedulableNodes":true}}
+          - --logtostderr=true
+          - --v=2
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/cluster-proportional-autoscaler:v1.10.2-gke.13@sha256:5d8547afe9975d9a090a9566e4bf07430f15092f8d803414ae0323d331940624
+          imagePullPolicy: IfNotPresent
+          name: autoscaler
+          resources:
+            requests:
+              cpu: 20m
+              memory: 10Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 65534
+          runAsGroup: 1000
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+          supplementalGroups:
+          - 65534
+        serviceAccount: kube-dns-autoscaler
+        serviceAccountName: kube-dns-autoscaler
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - key: components.gke.io/gke-managed-components
+          operator: Exists
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-03T02:11:36Z"
+      lastUpdateTime: "2025-12-03T02:11:36Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-03T02:10:41Z"
+      lastUpdateTime: "2025-12-03T02:11:36Z"
+      message: ReplicaSet "kube-dns-autoscaler-5bf7f79bb4" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      components.gke.io/layer: addon
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-03T02:10:43Z"
+    generation: 1
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+      k8s-app: glbc
+      kubernetes.io/cluster-service: "true"
+      kubernetes.io/name: GLBC
+    name: l7-default-backend
+    namespace: kube-system
+    resourceVersion: "1764727894424479021"
+    uid: 465be817-9037-4e69-b3d9-ba2d5f268db4
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        k8s-app: glbc
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          components.gke.io/component-name: l7-lb-controller-combined
+          components.gke.io/component-version: 1.36.4-gke.0
+        creationTimestamp: null
+        labels:
+          k8s-app: glbc
+          name: glbc
+      spec:
+        automountServiceAccountToken: false
+        containers:
+        - image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/ingress-gce-404-server-with-metrics:v1.36.2@sha256:2e2ff60c96f67592b6fa403ec192ad9e4064ec9a9589e2774e6f78eeb1804497
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: default-http-backend
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - all
+            readOnlyRootFilesystem: true
+            runAsGroup: 1000
+            runAsUser: 1000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+        - key: components.gke.io/gke-managed-components
+          operator: Exists
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-03T02:11:34Z"
+      lastUpdateTime: "2025-12-03T02:11:34Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-03T02:10:44Z"
+      lastUpdateTime: "2025-12-03T02:11:34Z"
+      message: ReplicaSet "l7-default-backend-78858cccc9" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      components.gke.io/layer: addon
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2025-12-03T02:10:58Z"
+    generation: 2
+    labels:
+      addonmanager.kubernetes.io/mode: Reconcile
+      k8s-app: metrics-server
+      version: v1.33.0
+    name: metrics-server-v1.33.0
+    namespace: kube-system
+    resourceVersion: "1765142680059055002"
+    uid: b7a73e34-656d-4b80-83af-157e1c046d12
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        k8s-app: metrics-server
+        version: v1.33.0
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          components.gke.io/component-name: metrics-server
+          components.gke.io/component-version: 1.33.0-gke.3
+        creationTimestamp: null
+        labels:
+          k8s-app: metrics-server
+          version: v1.33.0
+        name: metrics-server
+      spec:
+        containers:
+        - command:
+          - /metrics-server
+          - --metric-resolution=30s
+          - --kubelet-preferred-address-types=InternalIP,Hostname,InternalDNS,ExternalDNS,ExternalIP
+          - --cert-dir=/tmp
+          - --secure-port=10250
+          - --kubelet-allow-working-set-bytes-zero=false
+          image: us-central1-artifactregistry.gcr.io/gke-release/gke-release/metrics-server:v0.7.1-gke.45@sha256:6d492cdefe6ca4b4582f37318b70fb2098cb35058f04128fb9f5a4cf9bd73243
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /livez
+              port: https
+              scheme: HTTPS
+            initialDelaySeconds: 50
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: metrics-server
+          ports:
+          - containerPort: 10250
+            name: https
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /readyz
+              port: https
+              scheme: HTTPS
+            initialDelaySeconds: 50
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 43m
+              memory: 55Mi
+            requests:
+              cpu: 43m
+              memory: 55Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 1000
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp
+            name: tmp-dir
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: metrics-server
+        serviceAccountName: metrics-server
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - key: components.gke.io/gke-managed-components
+          operator: Exists
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: metrics-server-config
+          name: metrics-server-config-volume
+        - emptyDir: {}
+          name: tmp-dir
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-12-03T02:10:58Z"
+      lastUpdateTime: "2025-12-03T02:12:42Z"
+      message: ReplicaSet "metrics-server-v1.33.0-6b8795c6f6" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-12-07T21:24:40Z"
+      lastUpdateTime: "2025-12-07T21:24:40Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""

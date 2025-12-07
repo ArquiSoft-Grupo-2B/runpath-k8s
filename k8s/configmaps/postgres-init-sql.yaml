@@ -1,0 +1,69 @@
+apiVersion: v1
+data:
+  init.sql: "-- Archivo de inicializaci\xC3\xB3n de la base de datos\n-- Este archivo\
+    \ se ejecuta autom\xC3\xA1ticamente cuando se crea el contenedor de PostgreSQL\n\
+    \n-- Crear extensiones necesarias\nCREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"\
+    ;\nCREATE EXTENSION IF NOT EXISTS \"postgis\";\n\n-- Verificar que las extensiones\
+    \ se crearon correctamente\nSELECT 'Base de datos inicializada correctamente con\
+    \ PostGIS' AS message;\n\n-- Crear tabla routes si no existe\nCREATE TABLE IF\
+    \ NOT EXISTS routes (\n    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n \
+    \   creator_id TEXT NOT NULL,\n    name VARCHAR(150) NOT NULL,\n    distance_km\
+    \ NUMERIC,\n    est_time_min INTEGER,\n    avg_rating NUMERIC DEFAULT 0,\n   \
+    \ geometry GEOGRAPHY(LineString, 4326),\n    completed_count INTEGER DEFAULT 0,\n\
+    \    score INTEGER DEFAULT 0,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n\
+    \    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- Crear \xC3\xADndices\
+    \ si no existen\nCREATE INDEX IF NOT EXISTS \"IDX_routes_creator_id\" ON \"routes\"\
+    \ (\"creator_id\");\nCREATE INDEX IF NOT EXISTS \"IDX_routes_avg_rating\" ON \"\
+    routes\" (\"avg_rating\");\nCREATE INDEX IF NOT EXISTS \"IDX_routes_created_at\"\
+    \ ON \"routes\" (\"created_at\");\nCREATE INDEX IF NOT EXISTS \"IDX_routes_geometry\"\
+    \ ON \"routes\" USING GIST (\"geometry\");\n\n-- Eliminar todas las rutas existentes\
+    \ de seed (por si acaso)\nDELETE FROM routes WHERE creator_id LIKE 'seed-user-%';\n\
+    \n-- Insertar rutas de seed\n-- Ruta 1: Ruta del Parque Central\nINSERT INTO routes\
+    \ (id, creator_id, name, distance_km, est_time_min, avg_rating, geometry, completed_count,\
+    \ score, created_at, updated_at)\nVALUES (\n    uuid_generate_v4(),\n    'seed-user-001',\n\
+    \    'Ruta del Parque Central',\n    2.5,\n    25,\n    4.5,\n    ST_GeogFromText('LINESTRING(-74.089138889\
+    \ 4.643611111, -74.090500000 4.642722222, -74.095250000 4.650055556, -74.092444444\
+    \ 4.652527778)'),\n    0,\n    25,\n    NOW(),\n    NOW()\n);\n\n-- Ruta 2: Ruta\
+    \ Norte\nINSERT INTO routes (id, creator_id, name, distance_km, est_time_min,\
+    \ avg_rating, geometry, completed_count, score, created_at, updated_at)\nVALUES\
+    \ (\n    uuid_generate_v4(),\n    'seed-user-001',\n    'Ruta Norte',\n    3.2,\n\
+    \    30,\n    4.2,\n    ST_GeogFromText('LINESTRING(-74.079166667 4.634472222,\
+    \ -74.068000000 4.632444444, -74.066527778 4.632083333, -74.066722222 4.630777778)'),\n\
+    \    0,\n    32,\n    NOW(),\n    NOW()\n);\n\n-- Ruta 3: Ruta Corta Este\nINSERT\
+    \ INTO routes (id, creator_id, name, distance_km, est_time_min, avg_rating, geometry,\
+    \ completed_count, score, created_at, updated_at)\nVALUES (\n    uuid_generate_v4(),\n\
+    \    'seed-user-002',\n    'Ruta Corta Este',\n    1.5,\n    15,\n    4.8,\n \
+    \   ST_GeogFromText('LINESTRING(-74.084111111 4.645472222, -74.082305556 4.652888889)'),\n\
+    \    0,\n    15,\n    NOW(),\n    NOW()\n);\n\n-- Ruta 4: Ruta Triangular\nINSERT\
+    \ INTO routes (id, creator_id, name, distance_km, est_time_min, avg_rating, geometry,\
+    \ completed_count, score, created_at, updated_at)\nVALUES (\n    uuid_generate_v4(),\n\
+    \    'seed-user-002',\n    'Ruta Triangular',\n    2.0,\n    20,\n    4.0,\n \
+    \   ST_GeogFromText('LINESTRING(-74.083111111 4.644166667, -74.079333333 4.642722222,\
+    \ -74.079055556 4.646500000)'),\n    0,\n    20,\n    NOW(),\n    NOW()\n);\n\n\
+    -- Ruta 5: Ruta Larga Sur-Norte\nINSERT INTO routes (id, creator_id, name, distance_km,\
+    \ est_time_min, avg_rating, geometry, completed_count, score, created_at, updated_at)\n\
+    VALUES (\n    uuid_generate_v4(),\n    'seed-user-003',\n    'Ruta Larga Sur-Norte',\n\
+    \    5.8,\n    55,\n    4.7,\n    ST_GeogFromText('LINESTRING(-74.064916667 4.628388889,\
+    \ -74.051138889 4.660027778)'),\n    0,\n    78,\n    NOW(),\n    NOW()\n);\n\n\
+    -- Ruta 6: Ruta Oeste Extendida\nINSERT INTO routes (id, creator_id, name, distance_km,\
+    \ est_time_min, avg_rating, geometry, completed_count, score, created_at, updated_at)\n\
+    VALUES (\n    uuid_generate_v4(),\n    'seed-user-003',\n    'Ruta Oeste Extendida',\n\
+    \    4.3,\n    40,\n    4.3,\n    ST_GeogFromText('LINESTRING(-74.082777778 4.644305556,\
+    \ -74.086777778 4.647000000, -74.093250000 4.651527778, -74.100472222 4.656861111)'),\n\
+    \    0,\n    43,\n    NOW(),\n    NOW()\n);\n\n-- Ruta 7: Ruta Sur Corta\nINSERT\
+    \ INTO routes (id, creator_id, name, distance_km, est_time_min, avg_rating, geometry,\
+    \ completed_count, score, created_at, updated_at)\nVALUES (\n    uuid_generate_v4(),\n\
+    \    'seed-user-004',\n    'Ruta Sur Corta',\n    1.2,\n    12,\n    3.9,\n  \
+    \  ST_GeogFromText('LINESTRING(-74.066500000 4.601416667, -74.061472222 4.603694444)'),\n\
+    \    0,\n    12,\n    NOW(),\n    NOW()\n);\n\n-- Ruta 8: Ruta Circular\nINSERT\
+    \ INTO routes (id, creator_id, name, distance_km, est_time_min, avg_rating, geometry,\
+    \ completed_count, score, created_at, updated_at)\nVALUES (\n    uuid_generate_v4(),\n\
+    \    'seed-user-004',\n    'Ruta Circular',\n    2.8,\n    28,\n    4.6,\n   \
+    \ ST_GeogFromText('LINESTRING(-74.089000000 4.633861111, -74.092638889 4.630611111,\
+    \ -74.091027778 4.628166667, -74.085083333 4.632083333, -74.089027778 4.633722222)'),\n\
+    \    0,\n    28,\n    NOW(),\n    NOW()\n);\n\nSELECT 'Se han insertado 8 rutas\
+    \ de seed exitosamente' AS message;"
+kind: ConfigMap
+metadata:
+  name: postgres-init-sql
+  namespace: default

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: frontend-deployment
+  name: frontend-deployment-service
+  namespace: default
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3001
+  selector:
+    app: frontend-deployment
+    app.kubernetes.io/managed-by: cloud-console
+  sessionAffinity: None
+  type: ClusterIP

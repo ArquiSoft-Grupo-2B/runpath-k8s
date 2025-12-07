@@ -1,0 +1,18 @@
+apiVersion: v1
+data:
+  AUTH_SERVICE_URL: http://api-gateway-service:80/authApi/graphql
+  CALCULATION_SERVICE_URL: http://api-gateway-service:80/distanceApi
+  DB_HOST: postgres
+  DB_NAME: routes_db
+  DB_PORT: '5432'
+  NODE_ENV: production
+  PORT: '3000'
+  RABBITMQ_EXCHANGE: notification-exchange
+  RABBITMQ_EXCHANGE_TYPE: direct
+  RABBITMQ_MAX_RECONNECT_ATTEMPTS: '5'
+  RABBITMQ_RECONNECT_DELAY: '5000'
+  RABBITMQ_ROUTING_KEY: notification-routing-key
+kind: ConfigMap
+metadata:
+  name: routes-config
+  namespace: default
