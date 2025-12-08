@@ -3,8 +3,11 @@ kind: StatefulSet
 metadata:
   labels:
     app: rabbitmq
+    tier: backend
+    tier-level: "6"
+    component: async-messaging
   name: rabbitmq
-  namespace: default
+  namespace: backend
 spec:
   persistentVolumeClaimRetentionPolicy:
     whenDeleted: Retain
@@ -20,6 +23,9 @@ spec:
     metadata:
       labels:
         app: rabbitmq
+        tier: backend
+        tier-level: "6"
+        component: async-messaging
     spec:
       containers:
       - env:

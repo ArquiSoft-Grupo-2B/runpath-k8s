@@ -3,8 +3,9 @@ kind: Service
 metadata:
   labels:
     app: notification-deployment
+    tier: backend
   name: notification-deployment-service
-  namespace: default
+  namespace: backend
 spec:
   internalTrafficPolicy: Cluster
   ipFamilies:

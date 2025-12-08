@@ -9,7 +9,10 @@ metadata:
     nginx.ingress.kubernetes.io/real-ip-header: X-Forwarded-For
     nginx.ingress.kubernetes.io/set-real-ip-from: 0.0.0.0/0
   name: frontend-ingress
-  namespace: default
+  namespace: presentation
+  labels:
+    tier: presentation
+    ingress-type: public-web
 spec:
   ingressClassName: nginx
   rules:

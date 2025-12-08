@@ -1,0 +1,87 @@
+# Network Segmentation Pattern - Namespace Tier Structure
+# Cada namespace representa un tier de seguridad del patrón de segmentación
+# Internet → security → presentation/edge → orchestration → backend → data
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: security
+  labels:
+    tier: security
+    tier-level: "0"
+    purpose: ingress-waf-gateway
+    network-policy: enabled
+  annotations:
+    description: "Tier 0 - Public-facing layer with Ingress controllers and WAF"
+    security-zone: "dmz"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: presentation
+  labels:
+    tier: presentation
+    tier-level: "1"
+    purpose: frontend-web
+    network-policy: enabled
+  annotations:
+    description: "Tier 1 - Frontend Web (NextJS SSR)"
+    security-zone: "internal"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: edge
+  labels:
+    tier: edge
+    tier-level: "2"
+    purpose: mobile-gateway
+    network-policy: enabled
+  annotations:
+    description: "Tier 2 - Mobile API edge gateway"
+    security-zone: "internal"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: orchestration
+  labels:
+    tier: orchestration
+    tier-level: "3"
+    purpose: api-gateway
+    network-policy: enabled
+  annotations:
+    description: "Tier 3 - API Gateway and orchestration layer"
+    security-zone: "internal"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: backend
+  labels:
+    tier: backend
+    tier-level: "5"
+    purpose: business-logic
+    network-policy: enabled
+  annotations:
+    description: "Tier 5 - Microservices business logic (auth, routes, distance, notifications, async)"
+    security-zone: "protected"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: data
+  labels:
+    tier: data
+    tier-level: "7"
+    purpose: databases-storage
+    network-policy: enabled
+  annotations:
+    description: "Tier 7 - Data persistence layer (PostgreSQL, logs)"
+    security-zone: "restricted"

@@ -1,0 +1,59 @@
+# Temporary NetworkPolicy to allow backend tier to access postgres in default namespace
+# TODO: Migrate postgres to 'data' namespace in the future
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-allow-to-default-postgres
+  namespace: backend
+  labels:
+    tier: backend
+    policy-type: allow-egress
+  annotations:
+    description: "TEMPORARY: Allow backend services to access postgres in default namespace"
+    migration-note: "This is temporary until postgres is migrated to 'data' namespace with proper PVC migration"
+spec:
+  podSelector:
+    matchLabels:
+      tier: backend
+  policyTypes:
+  - Egress
+  egress:
+  # Allow to postgres in default namespace
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: default
+    - podSelector:
+        matchLabels:
+          app: postgres
+    ports:
+    - protocol: TCP
+      port: 5432
+
+---
+# Allow postgres in default to receive traffic from backend
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-allow-postgres-from-backend
+  namespace: default
+  labels:
+    tier: data
+    policy-type: allow-ingress
+  annotations:
+    description: "TEMPORARY: Allow postgres to receive traffic from backend namespace"
+spec:
+  podSelector:
+    matchLabels:
+      app: postgres
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          tier: backend
+    ports:
+    - protocol: TCP
+      port: 5432

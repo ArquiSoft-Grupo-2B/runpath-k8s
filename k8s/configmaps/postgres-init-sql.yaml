@@ -65,5 +65,8 @@ data:
     \ de seed exitosamente' AS message;"
 kind: ConfigMap
 metadata:
+  labels:
+    app: postgres
+    tier: data
   name: postgres-init-sql
-  namespace: default
+  namespace: data

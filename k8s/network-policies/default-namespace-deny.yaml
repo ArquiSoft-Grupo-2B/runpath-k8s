@@ -1,0 +1,17 @@
+# Default Deny All for default namespace
+# This is CRITICAL to prevent unauthorized access to PostgreSQL
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: default
+  labels:
+    tier: data
+    policy-type: default-deny
+  annotations:
+    description: "Default deny all traffic in default namespace to protect PostgreSQL"
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress

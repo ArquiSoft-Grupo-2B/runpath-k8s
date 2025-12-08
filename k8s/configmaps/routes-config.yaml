@@ -1,8 +1,8 @@
 apiVersion: v1
 data:
-  AUTH_SERVICE_URL: http://api-gateway-service:80/authApi/graphql
-  CALCULATION_SERVICE_URL: http://api-gateway-service:80/distanceApi
-  DB_HOST: postgres
+  AUTH_SERVICE_URL: http://api-gateway-service.orchestration.svc.cluster.local:80/authApi/graphql
+  CALCULATION_SERVICE_URL: http://api-gateway-service.orchestration.svc.cluster.local:80/distanceApi
+  DB_HOST: postgres.default.svc.cluster.local
   DB_NAME: routes_db
   DB_PORT: '5432'
   NODE_ENV: production
@@ -14,5 +14,8 @@ data:
   RABBITMQ_ROUTING_KEY: notification-routing-key
 kind: ConfigMap
 metadata:
+  labels:
+    app: routes
+    tier: backend
   name: routes-config
-  namespace: default
+  namespace: backend

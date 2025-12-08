@@ -1,6 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    app: postgres
+    tier: data
+    tier-level: "7"
+    component: database
   name: postgres-deployment
   namespace: default
 spec:
@@ -19,6 +24,9 @@ spec:
     metadata:
       labels:
         app: postgres
+        tier: data
+        tier-level: "7"
+        component: database
     spec:
       containers:
       - env:
@@ -33,7 +41,13 @@ spec:
         image: postgis/postgis:15-3.3-alpine
         imagePullPolicy: IfNotPresent
         name: postgres
-        resources: {}
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 300m
+            memory: 256Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:

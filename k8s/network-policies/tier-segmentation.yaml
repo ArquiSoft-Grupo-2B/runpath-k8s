@@ -1,0 +1,518 @@
+# Network Segmentation Pattern - NetworkPolicies
+# Implementación del patrón de segmentación por capas
+# Internet → security → presentation/edge → orchestration → backend → data
+# Solo se permite comunicación entre tiers adyacentes
+
+---
+# ============================================================================
+# TIER 1: PRESENTATION - Default Deny All
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: presentation-default-deny
+  namespace: presentation
+  labels:
+    tier: presentation
+    policy-type: default-deny
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+# ============================================================================
+# TIER 1: PRESENTATION - Allow from Security (Ingress Controller)
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: presentation-allow-from-security
+  namespace: presentation
+  labels:
+    tier: presentation
+    policy-type: allow-ingress
+  annotations:
+    description: "Allow traffic from Ingress Controller (nginx) in security tier"
+spec:
+  podSelector:
+    matchLabels:
+      tier: presentation
+  policyTypes:
+  - Ingress
+  ingress:
+  # Allow from Ingress Controller (NGINX typically runs in ingress-nginx namespace)
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: ingress-nginx
+    - namespaceSelector:
+        matchLabels:
+          tier: security
+    ports:
+    - protocol: TCP
+      port: 3001  # Frontend SSR port
+
+---
+# ============================================================================
+# TIER 1: PRESENTATION - Allow Egress to Orchestration
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: presentation-allow-to-orchestration
+  namespace: presentation
+  labels:
+    tier: presentation
+    policy-type: allow-egress
+  annotations:
+    description: "Allow frontend to call API Gateway in orchestration tier"
+spec:
+  podSelector:
+    matchLabels:
+      tier: presentation
+  policyTypes:
+  - Egress
+  egress:
+  # Allow to API Gateway ONLY (not other services in orchestration)
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tier: orchestration
+      podSelector:
+        matchLabels:
+          app: api-gateway
+    ports:
+    - protocol: TCP
+      port: 80
+    - protocol: TCP
+      port: 8888
+  # Allow DNS resolution
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+
+---
+# ============================================================================
+# TIER 2: EDGE - Default Deny All
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: edge-default-deny
+  namespace: edge
+  labels:
+    tier: edge
+    policy-type: default-deny
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+# ============================================================================
+# TIER 2: EDGE - Allow from Security (Ingress for mobile)
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: edge-allow-from-security
+  namespace: edge
+  labels:
+    tier: edge
+    policy-type: allow-ingress
+  annotations:
+    description: "Allow mobile traffic from Ingress Controller"
+spec:
+  podSelector:
+    matchLabels:
+      tier: edge
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: ingress-nginx
+    - namespaceSelector:
+        matchLabels:
+          tier: security
+
+---
+# ============================================================================
+# TIER 2: EDGE - Allow Egress to Orchestration
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: edge-allow-to-orchestration
+  namespace: edge
+  labels:
+    tier: edge
+    policy-type: allow-egress
+spec:
+  podSelector:
+    matchLabels:
+      tier: edge
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tier: orchestration
+  # Allow DNS
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+
+---
+# ============================================================================
+# TIER 3: ORCHESTRATION - Default Deny All
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: orchestration-default-deny
+  namespace: orchestration
+  labels:
+    tier: orchestration
+    policy-type: default-deny
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+# ============================================================================
+# TIER 3: ORCHESTRATION - Allow from Presentation and Edge
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: orchestration-allow-from-presentation-edge
+  namespace: orchestration
+  labels:
+    tier: orchestration
+    policy-type: allow-ingress
+  annotations:
+    description: "Allow API Gateway to receive from frontend and mobile edge"
+spec:
+  podSelector:
+    matchLabels:
+      tier: orchestration
+  policyTypes:
+  - Ingress
+  ingress:
+  # From presentation tier (frontend)
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          tier: presentation
+    ports:
+    - protocol: TCP
+      port: 8888
+    - protocol: TCP
+      port: 80
+  # From edge tier (mobile proxy)
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          tier: edge
+    ports:
+    - protocol: TCP
+      port: 8888
+    - protocol: TCP
+      port: 80
+  # From Ingress directly (mobile-ingress goes direct to api-gateway)
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 8888
+    - protocol: TCP
+      port: 80
+
+---
+# ============================================================================
+# TIER 3: ORCHESTRATION - Allow Egress to Backend
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: orchestration-allow-to-backend
+  namespace: orchestration
+  labels:
+    tier: orchestration
+    policy-type: allow-egress
+  annotations:
+    description: "Allow API Gateway to route to backend microservices"
+spec:
+  podSelector:
+    matchLabels:
+      tier: orchestration
+  policyTypes:
+  - Egress
+  egress:
+  # To backend services
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tier: backend
+    ports:
+    - protocol: TCP
+      port: 80
+    - protocol: TCP
+      port: 8000  # auth
+    - protocol: TCP
+      port: 3000  # routes
+    - protocol: TCP
+      port: 5000  # distance
+    - protocol: TCP
+      port: 8080  # notification
+  # Allow DNS
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+
+---
+# ============================================================================
+# TIER 5: BACKEND - Default Deny All
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-default-deny
+  namespace: backend
+  labels:
+    tier: backend
+    policy-type: default-deny
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+# ============================================================================
+# TIER 5: BACKEND - Allow from Orchestration
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-allow-from-orchestration
+  namespace: backend
+  labels:
+    tier: backend
+    policy-type: allow-ingress
+  annotations:
+    description: "Allow backend services to receive from API Gateway"
+spec:
+  podSelector:
+    matchLabels:
+      tier: backend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          tier: orchestration
+    ports:
+    - protocol: TCP
+      port: 8000  # auth
+    - protocol: TCP
+      port: 3000  # routes
+    - protocol: TCP
+      port: 5000  # distance
+    - protocol: TCP
+      port: 8080  # notification
+    - protocol: TCP
+      port: 80
+
+---
+# ============================================================================
+# TIER 5: BACKEND - Allow Internal Communication (between microservices)
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-allow-internal
+  namespace: backend
+  labels:
+    tier: backend
+    policy-type: allow-internal
+  annotations:
+    description: "Allow microservices to communicate with each other and RabbitMQ"
+spec:
+  podSelector:
+    matchLabels:
+      tier: backend
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow from other backend services
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          tier: backend
+    - podSelector:
+        matchLabels:
+          tier: backend
+  egress:
+  # Allow to other backend services
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tier: backend
+    - podSelector:
+        matchLabels:
+          tier: backend
+
+---
+# ============================================================================
+# TIER 5: BACKEND - Allow Egress to Data tier
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-allow-to-data
+  namespace: backend
+  labels:
+    tier: backend
+    policy-type: allow-egress
+  annotations:
+    description: "Allow backend services to access databases"
+spec:
+  podSelector:
+    matchLabels:
+      tier: backend
+  policyTypes:
+  - Egress
+  egress:
+  # To PostgreSQL
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tier: data
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow DNS
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow ONLY external HTTPS/SMTP (Internet) - Block internal cluster IPs
+  # This prevents lateral movement to other namespaces while allowing Firebase, Gmail, etc.
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 10.0.0.0/8       # Private range Class A (Pod IPs)
+        - 172.16.0.0/12    # Private range Class B
+        - 192.168.0.0/16   # Private range Class C
+        - 34.118.0.0/16    # GKE ClusterIP range (blocks internal services)
+    ports:
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 587  # SMTP for email
+
+---
+# ============================================================================
+# TIER 7: DATA - Default Deny All
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: data-default-deny
+  namespace: data
+  labels:
+    tier: data
+    policy-type: default-deny
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+# ============================================================================
+# TIER 7: DATA - Allow from Backend only
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: data-allow-from-backend
+  namespace: data
+  labels:
+    tier: data
+    policy-type: allow-ingress
+  annotations:
+    description: "Allow databases to receive connections only from backend tier"
+spec:
+  podSelector:
+    matchLabels:
+      tier: data
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          tier: backend
+    ports:
+    - protocol: TCP
+      port: 5432  # PostgreSQL
+
+---
+# ============================================================================
+# TIER 7: DATA - Allow minimal egress (for updates, etc)
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: data-allow-minimal-egress
+  namespace: data
+  labels:
+    tier: data
+    policy-type: allow-egress
+  annotations:
+    description: "Allow DNS resolution only for data tier"
+spec:
+  podSelector:
+    matchLabels:
+      tier: data
+  policyTypes:
+  - Egress
+  egress:
+  # Allow DNS only
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53

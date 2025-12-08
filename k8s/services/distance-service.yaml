@@ -3,9 +3,10 @@ kind: Service
 metadata:
   labels:
     app: distance-app
-    component: osrm-backend
+    tier: backend
+    component: distance-service
   name: distance-service
-  namespace: default
+  namespace: backend
 spec:
   internalTrafficPolicy: Cluster
   ipFamilies:
